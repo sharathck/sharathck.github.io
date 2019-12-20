@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background: #fff;
+  color: #333;
+  font-family: Lato, sans-serif;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li * {
+  float: left;
+}
+li,
+input,
+button {
+  outline: none;
+}
+
+.newinput {
+  margin-top: 0%;
+  font-size: 100%;
+  width: 50%;
+  height: auto;
+  border: 2px solid #333;
+  background: #fff;
+  font-family: Lato, sans-serif;
+  color: #333;
+}
+.newinput:focus {
+  color: #333;
+}
+.mnewinput {
+  margin: 0%;
+  font-size: 300%;
+  width: 50%;
+  height: auto;
+  float:left;
+  border: 4px solid #333;
+  background: #fff;
+  font-family: Lato, sans-serif;
+  color: #333;
+}
+.mnewinput:focus {
+  color: #333;
+}
+
+.addbutton {
+  background: none;
+  border: none;
+  width: 2.5%;
+  font-size: 125%;
+  margin-left: 2%;
+  cursor: pointer;
+}
+.maddbutton {
+  background: none;
+  font-size: 325%;
+  border: none;
+  width: 5%;
+  margin-left: 8%;
+  cursor: pointer;
+}
+
+li {
+  overflow: hidden;
+}
+
+li > .cmobile {
+  line-height: Auto;
+  font-size: 50%;
+  width: 85%;
+  padding: Auto;
+  float: left;
+  position: relative;
+}
+li > .cdesktop {
+  line-height: Auto;
+  font-size: 100%;
+  width: 90%;
+  padding: Auto;
+  float: left;
+  position: relative;
+}
+
+li > .mdelete {
+  background: none;
+  border: none;
+  float: right;
+  font-size: 300%;
+  cursor: pointer;
+}
+
+li > .delete {
+  background: none;
+  border: none;
+  font-size: 125%;
+  cursor: pointer;
+}
+
+
+</style>
+</head>
+<!-- <body onload='loadpendingtodolist()'>-->
+<body onload='loadtodolist()'>
+  <div class="flex-container">
+    <p>
+      <input id="new-task" type="text" class="newinput">
+      <button id ="add-button" class="addbutton">Add</button>
+      <button id ="count" class="addbutton">0</button>
+    </p>
+    <ul id="incomplete-tasks">
+    </ul>
+    </div>
+   <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-firestore.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chrono-node@1.3.11/chrono.min.js"></script>
+ 
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBNeonGTfBV2QhXxkufPueC-gQLCrcsB08",
+    authDomain: "reviewtext-ad5c6.firebaseapp.com",
+    databaseURL: "https://reviewtext-ad5c6.firebaseio.com",
+    projectId: "reviewtext-ad5c6",
+    storageBucket: "reviewtext-ad5c6.appspot.com",
+    messagingSenderId: "892085575649"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script type="text/javascript">
+var taskInput = document.getElementById("new-task");
+var count = 0;
+var countbutton = document.getElementById("count");
+var addButton = document.getElementById("add-button");
+var incompleteTasksHolder = document.getElementById("incomplete-tasks");
+countbutton.innerText = count;
+
+document.getElementById("new-task").focus();
+  
+var db = firebase.firestore();
+
+taskInput.addEventListener("keydown", function(e) {
+  if (e.keyCode === 13) {
+    addTask();
+  }
+});
+
+//New Task List Item
+var createNewTaskElement = function(taskString, taskID) {
+  var listItem = document.createElement("li");
+  var docid = document.createElement("label");
+  var tlabel = document.createElement("label");
+  var deleteButton = document.createElement("button");
+
+  tlabel.id = "tasklabel";
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    tlabel.className = "cmobile";
+    deleteButton.className = "mdelete";
+  } else {
+    tlabel.className = "cdesktop";
+    deleteButton.className = "delete";
+  };
+
+ tlabel.innerText = taskString;
+
+
+  docid.id = "doclabel";
+  docid.innerText = taskID;
+  docid.style.display = "none";
+
+
+  deleteButton.id = "deletefield";
+  deleteButton.innerHTML = "DEL";
+
+  listItem.appendChild(docid);
+  listItem.appendChild(tlabel);
+  listItem.appendChild(deleteButton);
+
+  return listItem;
+};
+
+
+var loadtodolist = function() {
+    if (/iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    document.querySelector("#new-task").className = "mnewinput";
+    document.querySelector("#add-button").className = "maddbutton";
+    document.querySelector("#count").className = "maddbutton";
+  };
+  if (/Android|webOS/i.test(navigator.userAgent)) {
+    document.querySelector("#new-task").className = "mnewinput";
+    document.querySelector("#add-button").className = "maddbutton";
+    document.querySelector("#count").className = "maddbutton";
+   };
+  var d = new Date();
+  var compl = '';
+  var pendinglist = document.createElement("incomplete-todo");
+  pendinglist.type = "ul";
+    db.collection("ReviewText").orderBy("dateAdded","desc").limit(2).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          console.log('pending   - ' + doc.data().title);
+          var listItem = createNewTaskElement(doc.data().title, doc.id);
+          count = count + doc.data().title.length;
+          countbutton.innerText = count;
+    //Append listItem to incompleteTasksHolder
+    incompleteTasksHolder.appendChild(listItem);
+    bindTaskEvents(listItem);
+  });
+  });
+
+};
+
+// Add a new task
+var addTask = function() {
+  var dueDate = new Date();
+  dueDate = new Date(dueDate.setDate(dueDate.getDate() - 1))
+  console.log("Add task...");
+
+  var inputvaluetask = taskInput.value;
+  //Create a new list item with the text from #new-task:
+  db.collection("ReviewText").add({
+    title: taskInput.value,
+    dateAdded: new Date()
+})
+.then(function(docRef) {
+  var listItem = createNewTaskElement(inputvaluetask, docRef.id);
+  //Append listItem to incompleteTasksHolder
+  incompleteTasksHolder.appendChild(listItem);
+  bindTaskEvents(listItem);
+  count = count + inputvaluetask.length;
+  countbutton.innerText = count;
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
+
+  taskInput.value = "";
+
+};
+
+
+// Delete an existing task
+var deleteTask = function() {
+  var listItem = this.parentNode;
+  var ul = listItem.parentNode;
+  console.log("Delete task");
+  console.log(listItem.querySelector("#doclabel").innerText);
+  console.log(listItem.querySelector("#tasklabel").innerText);
+  db.collection("ReviewText").doc(listItem.querySelector("#doclabel").innerText).delete().then(function() {
+    console.log("Document successfully deleted!");
+}).catch(function(error) {
+    console.error("Error removing document: ", error);
+});
+  //Remove the parent list item from the ul
+  ul.removeChild(listItem);
+
+};
+
+var bindTaskEvents = function(taskListItem) {
+  var deleteButton = taskListItem.querySelector("#deletefield");
+  deleteButton.onclick = deleteTask;
+};
+
+var ajaxRequest = function() {
+  console.log("AJAX Request");
+};
+
+// Set the click handler to the addTask function
+//addButton.onclick = addTask;
+addButton.addEventListener("click", addTask);
+addButton.addEventListener("click", ajaxRequest);
+
+// Cycle over the incompleteTaskHolder ul list items
+for (var i = 0; i < incompleteTasksHolder.children.length; i++) {
+  // bind events to list item's children (taskCompleted)
+  bindTaskEvents(incompleteTasksHolder.children[i]);
+}
+
+</script>
+
+</body>
+
+</html>
