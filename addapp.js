@@ -27,7 +27,6 @@ var createNewTaskElement = function (taskString, taskID) {
   };
 
   tlabel.innerText = taskString;
-
   docid.id = "doclabel";
   docid.innerText = taskID;
   docid.style.display = "none";
@@ -225,5 +224,5 @@ addButton.addEventListener("click", ajaxRequest);
 // Cycle over the incompleteTaskHolder ul list items
 for (var i = 0; i < incompleteTasksHolder.children.length; i++) {
   // bind events to list item's children (taskCompleted)
-  bindTaskEvents(incompleteTasksHolder.children[i], taskCompleted);
+  bindTaskEvents(incompleteTasksHolder.children[i]);
 }
