@@ -133,7 +133,7 @@ var loadtodolist = function () {
 
       // firebase.firestore().disableNetwork();
       console.log('from cache  -  ' + useremail + ';');
-      db.collection("tasks").where("uemail", "==", useremail).where("dueDate", "==", currDate).where("status", "==", false).orderBy("dueDate", "desc").get()
+      db.collection("tasks").where("uemail", "==", useremail).where("dueDate", "<=", currDate).where("status", "==", false).orderBy("dueDate", "desc").get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             console.log(querySnapshot);
