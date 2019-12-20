@@ -1,6 +1,37 @@
+ // Initialize Firebase
+  // TODO: Replace with your project's customized code snippet
+  var config = {
+    apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
+    authDomain: "listspeaker.firebaseapp.com",
+    databaseURL: "https://listspeaker.firebaseio.com",
+    projectId: "listspeaker",
+    storageBucket: "listspeaker.appspot.com",
+    messagingSenderId: "576657502351"
+  };
+  firebase.initializeApp(config);
+  firebase.firestore().enablePersistence()
+  .then(function () {
+   // Initialize Cloud Firestore through firebase
+   console.log("Cache is enabled");
+ })
+  .catch(function(err) {
+      if (err.code == 'failed-precondition') {
+console.log("no cache on this browser");
+      } else if (err.code == 'unimplemented') {
+        console.log("no cache on this browser");
+      }
+  });
+// Subsequent queries will use persistence, if it was enabled successfully
+  //Handle Account Status
+firebase.auth().onAuthStateChanged(user => {
+  if(user) {}
+  else{
+    window.location = 'signin.html';
+  }
+});
+
 // Problem: User interaction doesn't provide desired results.
 // Solution: Add interactivity so the user can manage daily tasks
-
 var taskInput = document.getElementById("new-task");
 var addButton = document.getElementsByTagName("button")[0];
 var incompleteTasksHolder = document.getElementById("incomplete-tasks");
@@ -9,6 +40,7 @@ var futureTasksHolder = document.getElementById("future-tasks");
 var db = firebase.firestore();
 var currentUid = null;
 var useremail = null;
+
 
 document.getElementById("new-task").focus();
 
@@ -525,12 +557,9 @@ for (var i = 0; i < completedTasksHolder.children.length; i++) {
 /*
 var editTask = function() {
   console.log("Edit Task...");
-
   var listItem = this.parentNode;
-
   var editInput = listItem.querySelector("input[type=text]");
   var label = listItem.querySelector("label");
-
   var containsClass = listItem.classList.contains("editMode");
   //if the class of the parent is .editMode
   if (containsClass) {
@@ -542,7 +571,6 @@ var editTask = function() {
     //input value becomes the label's text
     editInput.value = label.innerText;
   }
-
   // Toggle .editMode on the parent
   listItem.classList.toggle("editMode");
 };
