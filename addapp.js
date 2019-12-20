@@ -20,25 +20,9 @@ taskInput.addEventListener("keydown", function (e) {
 var createNewTaskElement = function (taskString, taskID) {
   var listItem = document.createElement("li");
   listItem.id = "listid";
-  var checkBox = document.createElement("input"); // checkbox
   var docid = document.createElement("label");
   var tlabel = document.createElement("label");
-  var deleteButton = document.createElement("button");
-  checkBox.type = "checkbox";
-  checkBox.id = "checkfield";
-
-
   tlabel.id = "tasklabel";
-
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    tlabel.className = "cmobile";
-    deleteButton.className = "mdelete";
-    checkBox.className = "mcheckbox";
-  } else {
-    tlabel.className = "cdesktop";
-    deleteButton.className = "delete";
-    checkBox.className = "ccheckbox";
-  };
 
   if (/Android|webOS/i.test(navigator.userAgent)) {
     tlabel.className = "candroid";
@@ -46,102 +30,12 @@ var createNewTaskElement = function (taskString, taskID) {
 
   tlabel.innerText = taskString;
 
-
   docid.id = "doclabel";
   docid.innerText = taskID;
   docid.style.display = "none";
-
-  deleteButton.id = "deletefield";
-  deleteButton.innerHTML = "<img src='delete.svg' width ='250%'>";
-
-  listItem.appendChild(checkBox);
   listItem.appendChild(docid);
   listItem.appendChild(tlabel);
-  listItem.appendChild(deleteButton);
-
   return listItem;
-};
-
-var loadtodolist = function () {
-  if (/iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    document.querySelector("#new-task").className = "imnewinput";
-    document.querySelector("#add-button").className = "maddbutton";
-    document.querySelector("#assist-button").className = "massistbutton";
-    document.querySelector("#signout-button").className = "msignoutbutton";
-    document.querySelector("#show-complete-button").className = "mshowcompletedbutton";
-    document.querySelector("#show-future-button").className = "mshowcompletedbutton";
-    document.querySelector("#signoutimage").className = "iphsignoutimage";
-    document.querySelector("#addimage").className = "iphaddimage";
-    document.querySelector("#assistimage").className = "iphaddimage";
-  };
-  if (/Android|webOS/i.test(navigator.userAgent)) {
-    document.querySelector("#new-task").className = "mnewinput";
-    document.querySelector("#add-button").className = "androidaddbutton";
-    document.querySelector("#assist-button").className = "androidassistbutton";
-    document.querySelector("#signout-button").className = "androidsignoutbutton";
-    document.querySelector("#show-complete-button").className = "mshowcompletedbutton";
-    document.querySelector("#show-future-button").className = "mshowcompletedbutton";
-  };
-  firebase.auth().onAuthStateChanged(function (user) {
-    // onAuthStateChanged listener triggers every time the user ID token changes.  
-    // This could happen when a new user signs in or signs out.  
-    // It could also happen when the current user ID token expires and is refreshed.  
-
-    if (user && user.uid != currentUid) {
-      // Update the UI when a new user signs in.  
-      // Otherwise ignore if this is a token refresh.  
-      // Update the current user UID.  
-      currentUid = user.uid;
-      useremail = user.email;
-      var currDate = new Date();
-      currDate.setHours(23);
-      currDate.setMinutes(59);
-
-      // firebase.firestore().disableNetwork();
-      console.log('from cache  -  ' + useremail + ';');
-    } else {
-      // Sign out operation. Reset the current user UID.  
-      currentUid = null;
-      console.log("no user signed in");
-    }
-  });
-
-
-};
-
-var loadcompletedtodolist = function () {
-  console.log('completing ' + useremail);
-  document.getElementById("show-complete-button").disabled = true;
-  if (useremail != null) {
-    db.collection("tasks").where("uemail", "==", useremail).where("status", "==", true).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        //      console.log(`${doc.id} => ${doc.data()}` );
-        console.log('completed' + doc.data().title);
-        //     console.log('completed' + useremail + ' ' + doc.data().uid);
-        var listItem = createNewTaskElement(doc.data().title, doc.id);
-        listItem.querySelector("#checkfield").checked = true;
-
-        //Append listItem to completedTasksHolder
-        completedTasksHolder.appendChild(listItem);
-        bindTaskEvents(listItem, taskIncomplete);
-      });
-    });
-  }
-};
-
-var loadfuturetodolist = function () {
-  document.getElementById("show-future-button").disabled = true;
-  db.collection("tasks").where("uemail", "==", "sharathck3@gmail.com").where("dueDate", ">", new Date()).where("status", "==", false).orderBy("dueDate", "asc").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      console.log('Future : ' + doc.data().title);
-      var listItem = createNewTaskElement(doc.data().title, doc.id);
-      listItem.querySelector("#checkfield").disabled = true;
-      //Append listItem to completedTasksHolder
-      futureTasksHolder.appendChild(listItem);
-      bindTaskEvents(listItem, taskCompleted);
-    });
-  });
 };
 
 var AppSignout = function () {
@@ -307,7 +201,6 @@ db.collection("tasks").add({
         var listItem = createNewTaskElement(inputvaluetask, docRef.id);
         //Append listItem to incompleteTasksHolder
         incompleteTasksHolder.appendChild(listItem);
-        bindTaskEvents(listItem, taskCompleted);
         console.log("Document written with ID: ", docRef.id);
         if (recurMessage) {
           alert(recurMessage);
@@ -321,118 +214,6 @@ db.collection("tasks").add({
   }
 };
 
-
-// Delete an existing task
-var deleteTask = function () {
-  var listItem = this.parentNode;
-  var ul = listItem.parentNode;
-  console.log("Delete task");
-  console.log(listItem.querySelector("#doclabel").innerText);
-  console.log(listItem.querySelector("#tasklabel").innerText);
-  db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).delete().then(function () {
-    console.log("Document successfully deleted!");
-  }).catch(function (error) {
-    console.error("Error removing document: ", error);
-  });
-  //Remove the parent list item from the ul
-  ul.removeChild(listItem);
-
-};
-
-// Mark a task as complete
-var taskCompleted = function () {
-  //Append the task list item to the #completed-tasks
-  var listItem = this.parentNode;
-  console.log("Mark completed");
-
-  db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).get().then(function (documentSnapshot) {
-    var rectype = documentSnapshot.data().recurType;
-    var tdueDate = new Date(documentSnapshot.data().dueDate.toDate());
-    console.log('recurType  tdueDate ' + rectype + ' ' + tdueDate);
-
-    if (rectype == 'n') {
-      db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
-        status: true
-      });
-    } else {
-      var d = new Date();
-      var nextday = new Date(d.setDate(d.getDate() + 1));
-      var day = new Array();
-      day[0] = "Sunday";
-      day[1] = "Monday";
-      day[2] = "Tuesday";
-      day[3] = "Wednesday";
-      day[4] = "Thursday";
-      day[5] = "Friday";
-      day[6] = "Saturday";
-
-      var recurDue = new Date();
-      if (rectype == 'w') {
-        ChronoDate = chrono.parseDate(day[tdueDate.getDay()], nextday, {
-          forwardDate: true
-        });
-        if (ChronoDate) {
-          recurDue = ChronoDate;
-        };
-      }
-      if (rectype == 'm') {
-        recurDue = new Date(tdueDate.setMonth(tdueDate.getMonth() + 1))
-      }
-      if (rectype == 'y') {
-        recurDue = new Date(tdueDate.setYear(tdueDate.getFullYear() + 1))
-      }
-      console.log('recurDue ' + recurDue);
-
-      db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
-        dueDate: recurDue
-      });
-    }
-  });
-
-  completedTasksHolder.appendChild(listItem);
-  bindTaskEvents(listItem, taskIncomplete);
-};
-
-// Mark a task as incomplete
-var taskIncomplete = function () {
-  console.log("Task Incomplete...");
-  // When checkbox is unchecked
-  // Append the task list item #incomplete-tasks
-  var listItem = this.parentNode;
-  console.log("Mark incomplete");
-  console.log(listItem.querySelector("#doclabel").innerText);
-  console.log(listItem.querySelector("#tasklabel").innerText);
-
-  db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
-      status: false
-    })
-    .then(function () {
-      console.log("Document successfully updated!");
-    })
-    .catch(function (error) {
-      // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
-    });
-
-  incompleteTasksHolder.appendChild(listItem);
-  bindTaskEvents(listItem, taskCompleted);
-};
-
-var bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
-  console.log("Bind list item events");
-  //select taskListItem's children
-  var checkBox = taskListItem.querySelector("#checkfield");
-  //  var editButton = taskListItem.querySelector("button.edit");
-  var deleteButton = taskListItem.querySelector("#deletefield");
-
-  // bind editTask to edit button
-  // editButton.onclick = editTask;
-  //bind deleteTask to delete button
-  deleteButton.onclick = deleteTask;
-
-  //bind checkBoxEventHandler to checkbox
-  checkBox.onchange = checkBoxEventHandler;
-};
 
 var ajaxRequest = function () {
   console.log("AJAX Request");
@@ -448,45 +229,3 @@ for (var i = 0; i < incompleteTasksHolder.children.length; i++) {
   // bind events to list item's children (taskCompleted)
   bindTaskEvents(incompleteTasksHolder.children[i], taskCompleted);
 }
-// Cycle over the completeTaskHolder ul list items
-for (var i = 0; i < completedTasksHolder.children.length; i++) {
-  // bind events to list item's children (taskIncompleted)
-  bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
-}
-
-// list
-/*var listTasks = function() {
-  console.log("list tasks...");
-  //Create a new list item with the text from #new-task:
-  var listItem = createNewTaskElement("Test this task first","dummayID");
-  //Append listItem to incompleteTasksHolder
-  incompleteTasksHolder.appendChild(listItem);
-  bindTaskEvents(listItem, taskCompleted);
-  taskInput.value = "";
-};*/
-// Edit an existing task
-/*
-var editTask = function() {
-  console.log("Edit Task...");
-
-  var listItem = this.parentNode;
-
-  var editInput = listItem.querySelector("input[type=text]");
-  var label = listItem.querySelector("label");
-
-  var containsClass = listItem.classList.contains("editMode");
-  //if the class of the parent is .editMode
-  if (containsClass) {
-    //switch from .editMode
-    //Make label text become the input's value
-    label.innerText = editInput.value;
-  } else {
-    //Switch to .editMode
-    //input value becomes the label's text
-    editInput.value = label.innerText;
-  }
-
-  // Toggle .editMode on the parent
-  listItem.classList.toggle("editMode");
-};
-*/
