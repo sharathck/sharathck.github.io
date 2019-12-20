@@ -1,0 +1,252 @@
+body {
+  background: #fff;
+  color: #333;
+  font-family: Lato, sans-serif;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li * {
+  float: left;
+ margin-bottom: 1%;
+}
+li,
+input,
+button {
+  outline: none;
+}
+
+
+
+/* Heading */
+.newinput {
+  margin-top: 0%;
+  font-size: 140%;
+  width: 50%;
+  height: auto;
+  border: 2px solid #333;
+  background: #fff;
+  font-family: Lato, sans-serif;
+  color: #333;
+}
+.newinput:focus {
+  color: #333;
+}
+.mnewinput {
+  margin: 0%;
+  font-size: 300%;
+  width: 60%;
+  height: auto;
+  float:left;
+  border: 4px solid #333;
+  background: #fff;
+  font-family: Lato, sans-serif;
+  color: #333;
+}
+.mnewinput:focus {
+  color: #333;
+}
+
+.imnewinput {
+  margin: 0%;
+  font-size: 300%;
+  width: 50%;
+  height: auto;
+  float:left;
+  border: 4px solid #333;
+  background: #fff;
+  font-family: Lato, sans-serif;
+  color: #333;
+}
+.imnewinput:focus {
+  color: #333;
+}
+
+
+.addbutton {
+  background: none;
+  border: none;
+  width: 2.5%;
+  margin-left: 2%;
+  cursor: pointer;
+}
+.maddbutton {
+  background: none;
+  border: none;
+  margin-left: 1%;
+  cursor: pointer;
+}
+.massistbutton {
+  background: none;
+  border: none;
+  margin-left: 1%;
+  cursor: pointer;
+}
+
+.msignoutbutton {
+  background: none;
+  border: none;
+  margin-left: 2%;
+  cursor: pointer;
+}
+.iphsignoutimage
+{
+  width:70px;
+}
+.iphaddimage
+{
+  width:70px;
+}
+
+.androidaddbutton {
+  background: none;
+  border: none;
+  width: 5%;
+  margin-left: 2%;
+  cursor: pointer;
+}
+
+.androidassistbutton {
+  background: none;
+  border: none;
+  width: 5%;
+  margin-left: 3%;
+  cursor: pointer;
+}
+
+.signoutbutton {
+  background: none;
+  border: none;
+  width: 2.5%;
+  font-size: 120%;
+  margin-left: 3%;
+  cursor: pointer;
+}
+
+.androidsignoutbutton {
+  background: none;
+  border: none;
+  width: 5%;
+  margin-left: 8%;
+  cursor: pointer;
+}
+.signoutimage
+{
+  width:190%;
+}
+.addimage
+{
+  width:190%;
+}
+
+p > .showcompletedbutton {
+  background: none;
+  border: none;
+  font-size: 90%;
+  cursor: pointer;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.1);/*ButtonColor*/
+  border-bottom: solid 4px  #84868b;
+  border-radius: 3px;
+}
+
+p > .showcompletedbutton:active {/*OnClick*/
+  -ms-transform: translateY(4px);
+  -webkit-transform: translateY(4px);
+  transform: translateY(4px);/*Move down*/
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);/*Reduce Shadow*/
+  border-bottom: none;
+}
+
+p > .mshowcompletedbutton {
+  background: none;
+  border: none;
+  font-size: 350%;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.1);/*ButtonColor*/
+  border-bottom: solid 4px  #84868b;
+  border-radius: 3px;
+}
+/* Task list */
+li {
+  overflow: hidden;
+}
+li .ccheckbox
+{
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  margin: 1%;
+  border: 3px;
+  width: 1%;
+  cursor: pointer;
+}
+li .mcheckbox
+{
+  -ms-transform: scale(4); /* IE */
+  -moz-transform: scale(4); /* FF */
+  -webkit-transform: scale(3); /* Safari and Chrome */
+  -o-transform: scale(4); /* Opera */
+  margin: 2%;
+  border: 3px;
+  width: 2%;
+  cursor: pointer;
+}
+
+li > .cmobile {
+  line-height: Auto;
+  font-size: 400%;
+  width: 75%;
+  padding: Auto;
+  float: left;
+  position: relative;
+}
+li > .candroid {
+  line-height: Auto;
+  font-size: 360%;
+  width: 85%;
+  padding: Auto;
+  float: left;
+  position: relative;
+}
+
+li > .cdesktop {
+  line-height: Auto;
+  font-size: 130%;
+  width: 55%;
+  padding: Auto;
+  float: left;
+  position: relative;
+}
+
+
+li > .mdelete {
+  background: none;
+  border: none;
+  font-size:400%;
+  width: auto;
+  height:auto;
+  cursor: pointer;
+}
+
+li > .delete {
+  background: none;
+  border: none;
+  width: 2%;
+  cursor: pointer;
+}
+
+
+/* Completed */
+#completed-tasks label {
+  text-decoration: line-through;
+  color: #888;
+}
