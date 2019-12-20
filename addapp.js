@@ -220,9 +220,3 @@ var ajaxRequest = function () {
 //addButton.onclick = addTask;
 addButton.addEventListener("click", addTask);
 addButton.addEventListener("click", ajaxRequest);
-
-// Cycle over the incompleteTaskHolder ul list items
-for (var i = 0; i < incompleteTasksHolder.children.length; i++) {
-  // bind events to list item's children (taskCompleted)
-  bindTaskEvents(incompleteTasksHolder.children[i]);
-}
