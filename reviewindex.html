@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="main.css">
+  <link type="text/css" src="./dist/bttn.min.css" />
+</head>
+<!-- <body onload='loadpendingtodolist()'>-->
+<body onload='loadtodolist()'>
+    <div class="flex-container">
+        <p>
+          <input id="new-task" type="text" class="newinput">
+          <button id ="add-button" class="addbutton"><img src="add.svg" id = "addimage" class = "addimage"></button>
+          <button onclick="location.href='https://assistant.google.com/services/a/uid/000000864377308f'" id ="assist-button" class="addbutton"><img src="assist.svg" id = "assistimage" class = "addimage"></button>
+          <button id ="signout-button" class="signoutbutton" onclick="AppSignout()"><img src="signout.svg" id = "signoutimage" class = "signoutimage"></button>
+        </p>
+        <ul id="incomplete-tasks">
+        </ul>
+        <p>
+        <button id ="show-complete-button" class="showcompletedbutton" onclick="loadcompletedtodolist()">Show Completed Tasks</button>
+        </p>
+        <ul id="completed-tasks">
+        </ul>
+        <p>
+          <button id ="show-future-button" class="showcompletedbutton" onclick="loadfuturetodolist()">Show Future Tasks</button>
+        </p>
+        <ul id="future-tasks">
+        </ul>
+      </div>
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+  <script src="chrono.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+</body>
+
+</html>
