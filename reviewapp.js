@@ -139,7 +139,7 @@ var loadtodolist = function () {
           querySnapshot.forEach((doc) => {
             console.log(querySnapshot);
             console.log('local   - ' + doc.data().title + doc.data().dueDate);
-            var listItem = createNewTaskElement(doc.data().title, doc.id);
+            var listItem = createNewTaskElement('cache   ' + doc.data().title, doc.id);
             //Append listItem to incompleteTasksHolder
             incompleteTasksHolder.appendChild(listItem);
             bindTaskEvents(listItem, taskCompleted);
