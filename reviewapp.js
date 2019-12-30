@@ -1,12 +1,12 @@
 // Initialize Firebase
   // TODO: Replace with your project's customized code snippet
   var config = {
-    apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
-    authDomain: "listspeaker.firebaseapp.com",
-    databaseURL: "https://listspeaker.firebaseio.com",
-    projectId: "listspeaker",
-    storageBucket: "listspeaker.appspot.com",
-    messagingSenderId: "576657502351"
+    apiKey: "AIzaSyBNeonGTfBV2QhXxkufPueC-gQLCrcsB08",
+    authDomain: "reviewtext-ad5c6.firebaseapp.com",
+    databaseURL: "https://reviewtext-ad5c6.firebaseio.com",
+    projectId: "reviewtext-ad5c6",
+    storageBucket: "reviewtext-ad5c6.appspot.com",
+    messagingSenderId: "892085575649"
   };
   firebase.initializeApp(config);
   firebase.firestore().enablePersistence()
