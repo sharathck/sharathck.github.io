@@ -138,7 +138,7 @@ var loadtodolist = function () {
           querySnapshot.forEach((doc) => {
             console.log(querySnapshot);
             console.log('local   - ' + doc.data().title + doc.data().dueDate);
-            var listItem = createNewTaskElement('* ' + doc.data().title, doc.id);
+            var listItem = createNewTaskElement(doc.data().title, doc.id);
             //Append listItem to incompleteTasksHolder
             incompleteTasksHolder.appendChild(listItem);
             bindTaskEvents(listItem, taskCompleted);
@@ -159,7 +159,7 @@ var loadtodolist = function () {
                   }
                 }
                 if (found == false) {
-                  var listItem = createNewTaskElement(sdoc.data().title, sdoc.id, sdoc.data().recurType);
+                  var listItem = createNewTaskElement('* ' + sdoc.data().title, sdoc.id);
                   //Append listItem to incompleteTasksHolder
                   //   console.log('FINAL server  -  ' + sdoc.data().title + ';');
                   incompleteTasksHolder.appendChild(listItem);
