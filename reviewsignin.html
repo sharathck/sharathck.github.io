@@ -16,12 +16,12 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <script type="text/javascript">
   var config = {
-    apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
-    authDomain: "listspeaker.firebaseapp.com",
-    databaseURL: "https://listspeaker.firebaseio.com",
-    projectId: "listspeaker",
-    storageBucket: "listspeaker.appspot.com",
-    messagingSenderId: "576657502351"
+    apiKey: "AIzaSyBNeonGTfBV2QhXxkufPueC-gQLCrcsB08",
+    authDomain: "reviewtext-ad5c6.firebaseapp.com",
+    databaseURL: "https://reviewtext-ad5c6.firebaseio.com",
+    projectId: "reviewtext-ad5c6",
+    storageBucket: "reviewtext-ad5c6.appspot.com",
+    messagingSenderId: "892085575649"
   };
   firebase.initializeApp(config);
       // FirebaseUI config.
@@ -72,7 +72,7 @@
 firebase.auth().onAuthStateChanged(user => {
   if(user) {
     console.log(firebase.auth().currentUser.uid);
-    window.location = 'index.html'; //After successful login, user will be redirected to home.html
+    window.location = 'reviewindex.html'; //After successful login, user will be redirected to home.html
   }
 });
 </script>
