@@ -134,7 +134,7 @@ var loadtodolist = function () {
 
       // firebase.firestore().disableNetwork();
       console.log('from cache  -  ' + useremail + ';');
-      db.collection("tasks").where("uemail", "==", useremail).where("dueDate", "<=", currDate).where("status", "==", false).orderBy("dueDate", "desc").get()
+      db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             console.log(querySnapshot);
@@ -146,7 +146,7 @@ var loadtodolist = function () {
           });
           console.log('from server  -  ' + useremail + ';');
           firebase.firestore().enableNetwork();
-          db.collection("tasks").where("uemail", "==", useremail).where("dueDate", "<=", currDate).where("status", "==", false).orderBy("dueDate", "desc").get()
+          db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").get()
             .then((squerySnapshot) => {
               squerySnapshot.forEach((sdoc) => {
                 //   console.log('server   - ' + sdoc.data().title);
