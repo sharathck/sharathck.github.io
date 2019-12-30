@@ -27,7 +27,7 @@ console.log("no cache on this browser");
 firebase.auth().onAuthStateChanged(user => {
   if(user) {}
   else{
-    window.location = 'signin.html';
+    window.location = 'reviewsignin.html';
   }
 });
 
