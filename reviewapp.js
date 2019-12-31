@@ -26,7 +26,6 @@ var taskInput = document.getElementById("new-task");
 var addButton = document.getElementsByTagName("button")[0];
 var incompleteTasksHolder = document.getElementById("incomplete-tasks");
 var completedTasksHolder = document.getElementById("completed-tasks");
-var futureTasksHolder = document.getElementById("future-tasks");
 var db = firebase.firestore();
 var currentUid = null;
 var useremail = null;
@@ -127,9 +126,9 @@ var loadtodolist = function () {
             db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").get()
                 .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                        console.log(querySnapshot);
-                        console.log('local   - ' + doc.data().title + doc.data().dueDate);
-                        var listItem = createNewTaskElement('cache   ' + doc.data().title, doc.id);
+                        //console.log(querySnapshot);
+                        //console.log(doc.data().title + doc.data().dueDate);
+                        var listItem = createNewTaskElement(doc.data().title, doc.id);
                         //Append listItem to incompleteTasksHolder
                         incompleteTasksHolder.appendChild(listItem);
                         bindTaskEvents(listItem, taskCompleted);
@@ -166,21 +165,6 @@ var loadcompletedtodolist = function () {
     }
 };
 
-var loadfuturetodolist = function () {
-    document.getElementById("show-future-button").disabled = true;
-    db.collection("tasks").where("uemail", "==", "sharathck3@gmail.com").where("dueDate", ">", new Date()).where("status", "==", false).orderBy("dueDate", "asc").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} => ${doc.data()}`);
-            console.log('Future : ' + doc.data().title);
-            var listItem = createNewTaskElement(doc.data().title, doc.id);
-            listItem.querySelector("#checkfield").disabled = true;
-            //Append listItem to completedTasksHolder
-            futureTasksHolder.appendChild(listItem);
-            bindTaskEvents(listItem, taskCompleted);
-        });
-    });
-};
-
 var AppSignout = function () {
     firebase.auth().signOut().then(function () {
         console.log('Signed Out');
@@ -195,149 +179,10 @@ var addTask = function () {
     if (useremail != null) {
         console.log("New Add task...");
         var inputvaluetask = taskInput.value;
-        var nextm = new Date();
-        var nexty = new Date();
-        var d = new Date();
-        var nextday = new Date(d.setDate(d.getDate() + 1));
-        var day = new Array();
-        var recurMessage = '';
-
-        day[0] = "Sunday";
-        day[1] = "Monday";
-        day[2] = "Tuesday";
-        day[3] = "Wednesday";
-        day[4] = "Thursday";
-        day[5] = "Friday";
-        day[6] = "Saturday";
-        var month = new Array();
-        month[0] = "January";
-        month[1] = "February";
-        month[2] = "March";
-        month[3] = "April";
-        month[4] = "May";
-        month[5] = "June";
-        month[6] = "July";
-        month[7] = "August";
-        month[8] = "September";
-        month[9] = "October";
-        month[10] = "November";
-        month[11] = "December";
-        var n = month[d.getMonth()];
-        var recurType = 'n';
-        var recurDay = 'na';
-        var recurCount = 0;
-        var startPos = 0;
-        var dueDate;
-        if (chrono.parseDate(inputvaluetask)) {
-            dueDate = chrono.parseDate(inputvaluetask);
-            dueDate.setHours(00);
-            dueDate.setMinutes(00);
-            recurMessage = 'Task is added with due date ' + month[dueDate.getMonth()] + ' ' + dueDate.getDate();
-            console.log(' Chrono non-recur dueDate ' + dueDate);
-        } else {
-            dueDate = new Date();
-        };
-        var everyPosition = 0;
-        var recurString;
-        everyPosition = inputvaluetask.toLowerCase().lastIndexOf('every week');
-        if (everyPosition > 1) {
-            startPos = everyPosition;
-            everyPosition += 10;
-        } else {
-            everyPosition = inputvaluetask.toLowerCase().lastIndexOf('weekly');
-            if (everyPosition > 1) {
-                startPos = everyPosition;
-                everyPosition += 6;
-            } else {
-                everyPosition = inputvaluetask.toLowerCase().lastIndexOf('every');
-                if (everyPosition > 1) {
-                    startPos = everyPosition;
-                    everyPosition += 5;
-                }
-            }
-        };
-        if (everyPosition > 4) {
-            finalTask = (inputvaluetask.substring(0, startPos)).trim();
-            recurString = (inputvaluetask.substring(everyPosition, inputvaluetask.length)).trim().toLowerCase();
-            recurType = 'w';
-            recurCount = 1;
-            ChronoDate = chrono.parseDate(recurString, new Date(), {
-                forwardDate: true
-            });
-            if (ChronoDate) {
-                dueDate = ChronoDate
-            };
-            recurMessage = 'Task is added with due date ' + month[dueDate.getMonth()] + ' ' + dueDate.getDate() + ' and weekly recurrence';
-        };
-        everyPosition = inputvaluetask.toLowerCase().lastIndexOf('every month');
-        if (everyPosition > 1) {
-            startPos = everyPosition;
-            everyPosition += 11;
-        } else {
-            everyPosition = inputvaluetask.toLowerCase().lastIndexOf('monthly');
-            if (everyPosition > 1) {
-                startPos = everyPosition;
-                everyPosition += 7;
-            }
-        };
-        if (everyPosition > 6) {
-            finalTask = (inputvaluetask.substring(0, startPos)).trim();
-            recurString = (inputvaluetask.substring(everyPosition, inputvaluetask.length)).trim().toLowerCase();
-            recurType = 'm';
-            recurCount = 1;
-            var curDate = new Date();
-            ChronoDate = chrono.parseDate(recurString + ' ' + month[curDate.getMonth()]);
-            if (ChronoDate) {
-                dueDate = ChronoDate
-            };
-            recurMessage = 'Task is added with due date ' + month[dueDate.getMonth()] + ' ' + dueDate.getDate() + ' and monthly recurrence';
-        };
-
-        everyPosition = inputvaluetask.toLowerCase().lastIndexOf('every year');
-        if (everyPosition > 1) {
-            startPos = everyPosition;
-            everyPosition += 10;
-        } else {
-            everyPosition = inputvaluetask.toLowerCase().lastIndexOf('yearly');
-            if (everyPosition > 1) {
-                startPos = everyPosition;
-                everyPosition += 6;
-            }
-        };
-        if (everyPosition > 5) {
-            finalTask = (inputvaluetask.substring(0, startPos)).trim();
-            recurString = (inputvaluetask.substring(everyPosition, inputvaluetask.length)).trim().toLowerCase();
-            recurType = 'y';
-            recurCount = 1;
-            ChronoDate = chrono.parseDate(recurString, new Date(), {
-                forwardDate: true
-            });
-            if (ChronoDate) {
-                dueDate = ChronoDate
-            };
-            recurMessage = 'Task is added with due date ' + month[dueDate.getMonth()] + ' ' + dueDate.getDate() + ' and yearly recurrence';
-        }
-        console.log(' after recur dueDate ' + dueDate);
-
-        if (recurType == 'n') {
-            finalTask = inputvaluetask;
-        } else {
-            dueDate.setHours(00);
-            dueDate.setMinutes(00);
-        };
-        recurDay = day[dueDate.getDay()];
-        var searcht = finalTask.toLowerCase();
-        searcht = searcht.replace(/ /g, '');
         db.collection("tasks").add({
-            uid: currentUid,
             uemail: useremail,
-            title: finalTask,
-            dateAdded: new Date(),
-            dueDate: dueDate,
-            recurType: recurType,
-            recurDay: recurDay,
-            recurCount: recurCount,
-            searchTitle: searcht,
+            title: inputvaluetask,
+            dueDate: new Date(),
             status: false
         })
             .then(function (docRef) {
@@ -346,9 +191,6 @@ var addTask = function () {
                 incompleteTasksHolder.appendChild(listItem);
                 bindTaskEvents(listItem, taskCompleted);
                 console.log("Document written with ID: ", docRef.id);
-                if (recurMessage) {
-                    alert(recurMessage);
-                };
             })
             .catch(function (error) {
                 console.error("Error adding document: ", error);
@@ -382,50 +224,16 @@ var taskCompleted = function () {
     var listItem = this.parentNode;
     console.log("Mark completed");
 
-    db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).get().then(function (documentSnapshot) {
-        var rectype = documentSnapshot.data().recurType;
-        var tdueDate = new Date(documentSnapshot.data().dueDate.toDate());
-        console.log('recurType  tdueDate ' + rectype + ' ' + tdueDate);
-
-        if (rectype == 'n') {
             db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
                 status: true
-            });
-        } else {
-            var d = new Date();
-            var nextday = new Date(d.setDate(d.getDate() + 1));
-            var day = new Array();
-            day[0] = "Sunday";
-            day[1] = "Monday";
-            day[2] = "Tuesday";
-            day[3] = "Wednesday";
-            day[4] = "Thursday";
-            day[5] = "Friday";
-            day[6] = "Saturday";
-
-            var recurDue = new Date();
-            if (rectype == 'w') {
-                ChronoDate = chrono.parseDate(day[tdueDate.getDay()], nextday, {
-                    forwardDate: true
-                });
-                if (ChronoDate) {
-                    recurDue = ChronoDate;
-                };
-            }
-            if (rectype == 'm') {
-                recurDue = new Date(tdueDate.setMonth(tdueDate.getMonth() + 1))
-            }
-            if (rectype == 'y') {
-                recurDue = new Date(tdueDate.setYear(tdueDate.getFullYear() + 1))
-            }
-            console.log('recurDue ' + recurDue);
-
-            db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
-                dueDate: recurDue
-            });
-        }
-    });
-
+            }) .then(function () {
+            console.log("Document successfully updated!");
+        })
+        .catch(function (error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+        } 
     completedTasksHolder.appendChild(listItem);
     bindTaskEvents(listItem, taskIncomplete);
 };
@@ -437,9 +245,7 @@ var taskIncomplete = function () {
     // Append the task list item #incomplete-tasks
     var listItem = this.parentNode;
     console.log("Mark incomplete");
-    console.log(listItem.querySelector("#doclabel").innerText);
-    console.log(listItem.querySelector("#tasklabel").innerText);
-
+  
     db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
         status: false
     })
