@@ -111,7 +111,7 @@ var loadtodolist = function () {
         // onAuthStateChanged listener triggers every time the user ID token changes.  
         // This could happen when a new user signs in or signs out.  
         // It could also happen when the current user ID token expires and is refreshed.  
-        console.log(' Before If ' +  ' useremail - ' + useremail + ' ; user.uid ' + user.uid + '; currentUid ' +  currentUid);
+        console.log(' Before If ' + ' useremail - ' + useremail + ' ; user.uid ' + user.uid + '; currentUid ' + currentUid);
 
         if (user && user.uid != currentUid) {
             // Update the UI when a new user signs in.  
@@ -224,18 +224,17 @@ var taskCompleted = function () {
     var listItem = this.parentNode;
     console.log("Mark completed");
 
-            db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
-                status: true
-            }) .then(function () {
-            console.log("Document successfully updated!");
-        })
+    db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
+        status: true
+    }).then(function () {
+        console.log("Document successfully updated!");
+    })
         .catch(function (error) {
             // The document probably doesn't exist.
             console.error("Error updating document: ", error);
         });
-        } 
-    completedTasksHolder.appendChild(listItem);
-    bindTaskEvents(listItem, taskIncomplete);
+completedTasksHolder.appendChild(listItem);
+bindTaskEvents(listItem, taskIncomplete);
 };
 
 // Mark a task as incomplete
@@ -245,7 +244,7 @@ var taskIncomplete = function () {
     // Append the task list item #incomplete-tasks
     var listItem = this.parentNode;
     console.log("Mark incomplete");
-  
+
     db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
         status: false
     })
