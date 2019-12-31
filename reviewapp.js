@@ -117,6 +117,7 @@ var loadtodolist = function () {
             // Update the current user UID.  
             currentUid = user.uid;
             useremail = user.email;
+            console.log(' useremail - ' + useremail + ' ; user.uid ' + user.uid + ' ; currentUid ' +  currentUid);
             var currDate = new Date();
             currDate.setHours(23);
             currDate.setMinutes(59);
