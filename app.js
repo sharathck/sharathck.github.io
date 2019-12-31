@@ -131,7 +131,7 @@ var loadtodolist = function () {
       currDate.setHours(23);
       currDate.setMinutes(59);
 
-      // firebase.firestore().disableNetwork();
+      firebase.firestore().disableNetwork();
       console.log('from cache  -  ' + useremail + ';');
       db.collection("tasks").where("uemail", "==", useremail).where("dueDate", "<=", currDate).where("status", "==", false).orderBy("dueDate", "desc").get()
         .then((querySnapshot) => {
