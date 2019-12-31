@@ -138,7 +138,7 @@ var loadtodolist = function () {
             currentUid = null;
             console.log("no user signed in");
         }
-    } 
+    } )
 };
 
 
