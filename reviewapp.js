@@ -106,13 +106,13 @@ var loadtodolist = function () {
         document.querySelector("#show-complete-button").className = "mshowcompletedbutton";
         document.querySelector("#show-future-button").className = "mshowcompletedbutton";
     };
-    console.log(' Loadtodolist funciton ' + ' ; currentUid ' +  currentUid);
+    console.log(' Loadtodolist funciton ' + ' ; currentUid ' + currentUid);
 
     firebase.auth().onAuthStateChanged(function (user) {
         // onAuthStateChanged listener triggers every time the user ID token changes.  
         // This could happen when a new user signs in or signs out.  
         // It could also happen when the current user ID token expires and is refreshed.  
-        console.log(' Before If ' + useremail - ' + useremail + ' ; user.uid ' + user.uid + ' ; currentUid ' +  currentUid);
+        console.log(' Before If ' +  ' useremail - ' + useremail + ' ; user.uid ' + user.uid + '; currentUid ' +  currentUid);
 
         if (user && user.uid != currentUid) {
             // Update the UI when a new user signs in.  
@@ -120,7 +120,7 @@ var loadtodolist = function () {
             // Update the current user UID.  
             currentUid = user.uid;
             useremail = user.email;
-            console.log(' useremail - ' + useremail + ' ; user.uid ' + user.uid + ' ; currentUid ' +  currentUid);
+            console.log(' useremail - ' + useremail + ' ; user.uid ' + user.uid + ' ; currentUid ' + currentUid);
             var currDate = new Date();
             currDate.setHours(23);
             currDate.setMinutes(59);
@@ -142,7 +142,7 @@ var loadtodolist = function () {
             currentUid = null;
             console.log("no user signed in");
         }
-    } )
+    })
 };
 
 
