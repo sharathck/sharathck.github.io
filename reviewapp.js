@@ -92,7 +92,6 @@ var loadtodolist = function () {
         document.querySelector("#assist-button").className = "massistbutton";
         document.querySelector("#signout-button").className = "msignoutbutton";
         document.querySelector("#show-complete-button").className = "mshowcompletedbutton";
-        document.querySelector("#show-future-button").className = "mshowcompletedbutton";
         document.querySelector("#signoutimage").className = "iphsignoutimage";
         document.querySelector("#addimage").className = "iphaddimage";
         document.querySelector("#assistimage").className = "iphaddimage";
@@ -103,7 +102,6 @@ var loadtodolist = function () {
         document.querySelector("#assist-button").className = "androidassistbutton";
         document.querySelector("#signout-button").className = "androidsignoutbutton";
         document.querySelector("#show-complete-button").className = "mshowcompletedbutton";
-        document.querySelector("#show-future-button").className = "mshowcompletedbutton";
     };
     console.log(' Loadtodolist funciton ' + ' ; currentUid ' + currentUid);
 
