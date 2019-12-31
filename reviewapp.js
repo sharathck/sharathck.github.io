@@ -10,18 +10,7 @@
     appId: "1:892085575649:web:b57abe0e1438f10dc6fca0"
   };
   firebase.initializeApp(config);
-  firebase.firestore().enablePersistence()
-  .then(function () {
-   // Initialize Cloud Firestore through firebase
-   console.log("Cache is enabled");
- })
-  .catch(function(err) {
-      if (err.code == 'failed-precondition') {
-console.log("no cache on this browser");
-      } else if (err.code == 'unimplemented') {
-        console.log("no cache on this browser");
-      }
-  });
+ 
 // Subsequent queries will use persistence, if it was enabled successfully
   //Handle Account Status
 firebase.auth().onAuthStateChanged(user => {
@@ -131,10 +120,7 @@ var loadtodolist = function () {
       var currDate = new Date();
       currDate.setHours(23);
       currDate.setMinutes(59);
-
-      // firebase.firestore().disableNetwork();
-      console.log('from cache  -  ' + useremail + ';');
-      db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").get()
+       db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             console.log(querySnapshot);
@@ -144,50 +130,6 @@ var loadtodolist = function () {
             incompleteTasksHolder.appendChild(listItem);
             bindTaskEvents(listItem, taskCompleted);
           });
-          console.log('from server  -  ' + useremail + ';');
-          firebase.firestore().enableNetwork();
-          db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").get()
-            .then((squerySnapshot) => {
-              squerySnapshot.forEach((sdoc) => {
-                //   console.log('server   - ' + sdoc.data().title);
-                var found = false;
-                for (var i = 0; i < querySnapshot.docs.length; i++) {
-                  console.log('loop server  -  ' + sdoc.data().title + ';');
-                  if (querySnapshot.docs[i].id == sdoc.id) {
-                    //    console.log('MATCH server  -  ' + sdoc.data().title + ';');
-                    found = true;
-                    break;
-                  }
-                }
-                if (found == false) {
-                  var listItem = createNewTaskElement(sdoc.data().title, sdoc.id);
-                  //Append listItem to incompleteTasksHolder
-                  //   console.log('FINAL server  -  ' + sdoc.data().title + ';');
-                  incompleteTasksHolder.appendChild(listItem);
-                  bindTaskEvents(listItem, taskCompleted);
-                }
-              });
-              querySnapshot.forEach((ddoc) => {
-                var found = false;
-                for (var i = 0; i < squerySnapshot.docs.length; i++) {
-                  //   console.log('DELETE loop server  -  ' + ddoc.data().title + ';');
-                  if (squerySnapshot.docs[i].id == ddoc.id) {
-                    //   console.log('DELETE MATCH server  -  ' + ddoc.data().title + ';');
-                    found = true;
-                    break;
-                  }
-                }
-                if (found == false) {
-                  //     var listItem = createNewTaskElement(ddoc.data().title, sdoc.id);
-                  //Append listItem to incompleteTasksHolder
-                  //     console.log('no match Delete from cache  -  ' + ddoc.data().title + ';');
-                  location.reload();
-                }
-              });
-            });
-        });
-
-
 
     } else {
       // Sign out operation. Reset the current user UID.  
