@@ -29,7 +29,7 @@ button {
 .newinput {
   margin-top: 0%;
   font-size: 140%;
-  width: 60%;
+  width: 80%;
   height: auto;
   border: 2px solid #333;
   background: #fff;
@@ -42,7 +42,7 @@ button {
 .mnewinput {
   margin: 0%;
   font-size: 300%;
-  width: 60%;
+  width: 70%;
   height: auto;
   float:left;
   border: 4px solid #333;
@@ -83,6 +83,7 @@ button {
   margin-left: 1%;
   cursor: pointer;
 }
+
 .msignoutbutton {
   background: none;
   border: none;
@@ -105,6 +106,7 @@ button {
   margin-left: 2%;
   cursor: pointer;
 }
+
 .signoutbutton {
   background: none;
   border: none;
@@ -188,7 +190,7 @@ li .mcheckbox
 li > .cmobile {
   line-height: Auto;
   font-size: 400%;
-  width: 75%;
+  width: 80%;
   padding: Auto;
   float: left;
   position: relative;
@@ -196,7 +198,7 @@ li > .cmobile {
 li > .candroid {
   line-height: Auto;
   font-size: 360%;
-  width: 85%;
+  width: 80%;
   padding: Auto;
   float: left;
   position: relative;
@@ -205,7 +207,7 @@ li > .candroid {
 li > .cdesktop {
   line-height: Auto;
   font-size: 130%;
-  width: 78%;
+  width: 85%;
   padding: Auto;
   float: left;
   position: relative;
