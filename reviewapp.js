@@ -89,17 +89,14 @@ var loadtodolist = function () {
     if (/iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         document.querySelector("#new-task").className = "imnewinput";
         document.querySelector("#add-button").className = "maddbutton";
-        document.querySelector("#assist-button").className = "massistbutton";
         document.querySelector("#signout-button").className = "msignoutbutton";
         document.querySelector("#show-complete-button").className = "mshowcompletedbutton";
         document.querySelector("#signoutimage").className = "iphsignoutimage";
         document.querySelector("#addimage").className = "iphaddimage";
-        document.querySelector("#assistimage").className = "iphaddimage";
     };
     if (/Android|webOS/i.test(navigator.userAgent)) {
         document.querySelector("#new-task").className = "mnewinput";
         document.querySelector("#add-button").className = "androidaddbutton";
-        document.querySelector("#assist-button").className = "androidassistbutton";
         document.querySelector("#signout-button").className = "androidsignoutbutton";
         document.querySelector("#show-complete-button").className = "mshowcompletedbutton";
     };
