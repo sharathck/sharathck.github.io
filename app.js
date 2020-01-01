@@ -159,7 +159,7 @@ var loadtodolist = function () {
                   }
                 }
                 if (found == false) {
-                  var listItem = createNewTaskElement('* ' + sdoc.data().title, sdoc.id);
+                  var listItem = createNewTaskElement(sdoc.data().title, sdoc.id);
                   //Append listItem to incompleteTasksHolder
                   //   console.log('FINAL server  -  ' + sdoc.data().title + ';');
                   incompleteTasksHolder.appendChild(listItem);
