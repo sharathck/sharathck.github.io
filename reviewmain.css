@@ -73,13 +73,14 @@ button {
 .addbutton {
   background: none;
   border: none;
-  width: 10%;
+  width: 2.5%;
   margin-left: 2%;
   cursor: pointer;
 }
 .maddbutton {
   background: none;
   border: none;
+  width: 10%;
   margin-left: 3%;
   cursor: pointer;
 }
@@ -102,7 +103,7 @@ button {
 .androidaddbutton {
   background: none;
   border: none;
-  width: 3%;
+  width: 10%;
   margin-left: 2%;
   cursor: pointer;
 }
