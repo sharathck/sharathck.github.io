@@ -42,7 +42,7 @@ button {
 .mnewinput {
   margin: 0%;
   font-size: 300%;
-  width: 70%;
+  width: 40%;
   height: auto;
   float:left;
   border: 4px solid #333;
@@ -80,14 +80,14 @@ button {
 .maddbutton {
   background: none;
   border: none;
-  margin-left: 1%;
+  margin-left: 3%;
   cursor: pointer;
 }
 
 .msignoutbutton {
   background: none;
   border: none;
-  margin-left: 2%;
+  margin-left: 3%;
   cursor: pointer;
 }
 .iphsignoutimage
