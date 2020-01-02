@@ -42,7 +42,7 @@ button {
 .mnewinput {
   margin: 0%;
   font-size: 300%;
-  width: 40%;
+  width: 60%;
   height: auto;
   float:left;
   border: 4px solid #333;
@@ -73,7 +73,7 @@ button {
 .addbutton {
   background: none;
   border: none;
-  width: 2.5%;
+  width: 10%;
   margin-left: 2%;
   cursor: pointer;
 }
