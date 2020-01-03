@@ -123,7 +123,7 @@ var loadtodolist = function () {
                     querySnapshot.forEach((doc) => {
                         //console.log(querySnapshot);
                         //console.log(doc.data().title + doc.data().dueDate);
-                        var listItem = createNewTaskElement(doc.data().title, doc.id);
+                        var listItem = createNewTaskElement(doc.data().title.substring(1, 20), doc.id);
                         //Append listItem to incompleteTasksHolder
                         incompleteTasksHolder.appendChild(listItem);
                         bindTaskEvents(listItem, taskCompleted);
