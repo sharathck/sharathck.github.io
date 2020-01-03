@@ -48,7 +48,7 @@ function getUrlVars() {
 }
 
 var addmode = getUrlVars()["addmode"];
-console.log(' addmode ' + addmode);
+//console.log(' addmode ' + addmode);
 //New Task List Item
 var createNewTaskElement = function (taskString, taskID) {
     var listItem = document.createElement("li");
@@ -133,10 +133,10 @@ var loadtodolist = function () {
                     querySnapshot.forEach((doc) => {
                         //console.log(querySnapshot);
                         //console.log(doc.data().title + doc.data().dueDate);
-                        console.log(' inside addmode ' + addmode);
+                        //console.log(' inside addmode ' + addmode);
                         if ( addmode == 'yes') {
-                        var listItem = createNewTaskElement(doc.data().title.substring(0, 20), doc.id);}
-                        else {var listItem = createNewTaskElement(doc.data().title.substring(0, 3), doc.id);}
+                        var listItem = createNewTaskElement(doc.data().title.substring(0, 22), doc.id);}
+                        else {var listItem = createNewTaskElement(doc.data().title, doc.id);}
                         //Append listItem to incompleteTasksHolder
                         incompleteTasksHolder.appendChild(listItem);
                         bindTaskEvents(listItem, taskCompleted);
