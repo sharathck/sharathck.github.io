@@ -179,7 +179,7 @@ var AppSignout = function () {
     }, function (error) {
         console.error('Sign Out Error', error);
     });
-    window.location = 'signin.html'; //After successful logout, user will be redirected to home.html
+    window.location = 'reviewsignin.html'; //After successful logout, user will be redirected to home.html
 };
 
 // Add a new task
