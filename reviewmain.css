@@ -41,9 +41,9 @@ button {
 }
 .mnewinput {
   margin: 1%;
-  font-size: 800%;
-  width: 50%;
-  height: 30;
+  font-size: 300%;
+  width: 60%;
+  height: 300px;
   float:left;
   border: 4px solid #333;
   background: #fff;
@@ -103,8 +103,9 @@ button {
 .androidaddbutton {
   background: none;
   border: none;
-  width: 14%;
-  margin-left: 1%;
+  width: 20%;
+  height: 300px;
+  margin-left: 0%;
   cursor: pointer;
 }
 
