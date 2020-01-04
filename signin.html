@@ -66,13 +66,7 @@
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             scopes: [
         'https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/tasks.readonly'
-      ],
-      customParameters: {
-      "tasklist": "@default",
-      "dueMax": tomorrow.toISOString(),
-      "maxResults": 10000,
-      "showCompleted": false,
-      "showDeleted": false     }
+      ]
         ]
       };
 
