@@ -22,7 +22,7 @@
   function execute() {
   return gapi.client.tasks.tasks.list({
       "tasklist": "@default",
-      "dueMax": Date.now(),
+      "dueMax": (new Date()).toISOString(),
       "maxResults": 10000,
       "showCompleted": false,
       "showDeleted": false
