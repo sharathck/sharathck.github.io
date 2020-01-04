@@ -25,6 +25,8 @@
   firebase.initializeApp(config);
       // FirebaseUI config.
           // FirebaseUI config.
+              var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
           var uiConfig = {
         callbacks: {
           signInSuccessWithAuthResult: function(authResult, redirectUrl) {
@@ -61,7 +63,16 @@
         signInFlow: 'popup',
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            scopes: [
+        'https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/tasks.readonly'
+      ],
+      customParameters: {
+      "tasklist": "@default",
+      "dueMax": tomorrow.toISOString(),
+      "maxResults": 10000,
+      "showCompleted": false,
+      "showDeleted": false     }
         ]
       };
 
