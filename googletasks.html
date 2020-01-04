@@ -20,9 +20,11 @@
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function execute() {
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
   return gapi.client.tasks.tasks.list({
       "tasklist": "@default",
-      "dueMax": ((new Date()).getDate() + 1).toISOString(),
+      "dueMax": tomorrow.toISOString(),
       "maxResults": 10000,
       "showCompleted": false,
       "showDeleted": false
