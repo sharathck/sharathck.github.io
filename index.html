@@ -89,21 +89,22 @@ console.log("no cache on this browser");
   //Handle Account Status
 var useremail = null;
 firebase.auth().onAuthStateChanged(user => {
-  if(user) { useremail= user.email;
+  if(user) { useremail= user.email; console.log('logged in');
   }
   else{
+    console.log('NOT logged in');
     window.location = 'signin.html';
   }
 });
  var db = firebase.firestore();
-    
+    if (useremail != null) {
     console.log("if New Add task..." + useremail);
  db.collection("tasks").add({
         uemail: useremail,
         title: 'tested',
         dateAdded: new Date(),
         status: false
-      });
+      });};
       
     tomorrow.setDate(tomorrow.getDate() + 1);
   return gapi.client.tasks.tasks.list({
