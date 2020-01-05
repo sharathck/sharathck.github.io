@@ -115,8 +115,11 @@ firebase.auth().onAuthStateChanged(user => {
       "showDeleted": false
     })
           .then(function(response) {
+    var gtasks = JSON.parse(response.result);  
                 // Handle the results here (response.result has the parsed body).
                 console.log("Response", response);
+                console.log("gtasks " + gtasks);
+    console.log(" gtasks.title "  + gtasks[1].title);
               },
               function(err) { console.error("Execute error", err); });
   }
