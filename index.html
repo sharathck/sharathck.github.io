@@ -87,9 +87,10 @@ console.log("no cache on this browser");
     
     // Subsequent queries will use persistence, if it was enabled successfully
   //Handle Account Status
-
+var useremail = null;
 firebase.auth().onAuthStateChanged(user => {
-  if(user) {}
+  if(user) { useremail= user.email;
+  }
   else{
     window.location = 'signin.html';
   }
