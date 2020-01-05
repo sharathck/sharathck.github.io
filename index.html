@@ -94,24 +94,14 @@ firebase.auth().onAuthStateChanged(user => {
 });
  var db = firebase.firestore();
     
-  if (useremail != null) {
     console.log("if New Add task..." + useremail);
  db.collection("tasks").add({
         uemail: useremail,
         title: 'tested',
         dateAdded: new Date(),
         status: false
-      })
-      .then(function (docRef) {
-        console.log("Document written with ID: ", docRef.id);
-        })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-      }
-             }
-             els { console.log("ekse New Add task..." + useremail);};
+      });
       
-    
     tomorrow.setDate(tomorrow.getDate() + 1);
   return gapi.client.tasks.tasks.list({
       "tasklist": "@default",
