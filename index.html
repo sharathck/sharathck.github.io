@@ -60,6 +60,58 @@
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function execute() {
     var tomorrow = new Date();
+    
+     var config = {
+    apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
+    authDomain: "listspeaker.firebaseapp.com",
+    databaseURL: "https://listspeaker.firebaseio.com",
+    projectId: "listspeaker",
+    storageBucket: "listspeaker.appspot.com",
+    messagingSenderId: "576657502351"
+  };
+  firebase.initializeApp(config);
+  firebase.firestore().enablePersistence()
+  .then(function () {
+   // Initialize Cloud Firestore through firebase
+   console.log("Cache is enabled");
+ })
+  .catch(function(err) {
+      if (err.code == 'failed-precondition') {
+console.log("no cache on this browser");
+      } else if (err.code == 'unimplemented') {
+        console.log("no cache on this browser");
+      }
+  });
+    
+    // Subsequent queries will use persistence, if it was enabled successfully
+  //Handle Account Status
+
+firebase.auth().onAuthStateChanged(user => {
+  if(user) {}
+  else{
+    window.location = 'signin.html';
+  }
+});
+ var db = firebase.firestore();
+    
+  if (useremail != null) {
+    console.log("if New Add task..." + useremail);
+ db.collection("tasks").add({
+        uemail: useremail,
+        title: 'tested',
+        dateAdded: new Date(),
+        status: false
+      })
+      .then(function (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+        })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      }
+             }
+             els { console.log("ekse New Add task..." + useremail);};
+      
+    
     tomorrow.setDate(tomorrow.getDate() + 1);
   return gapi.client.tasks.tasks.list({
       "tasklist": "@default",
