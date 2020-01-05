@@ -27,6 +27,9 @@
         <ul id="future-tasks">
         </ul>
       </div>
+ <button onclick="authenticate().then(loadClient)">authorize and load</button>
+<button onclick="execute()">execute</button>
+
   <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
   <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="firebase-app.js"></script>
@@ -38,8 +41,6 @@
   <script src="chrono.min.js"></script>
 <script type="text/javascript" src="app.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
-<button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="execute()">execute</button>
   
 </body>
 
