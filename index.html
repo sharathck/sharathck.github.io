@@ -6,7 +6,8 @@
   <link type="text/css" src="./dist/bttn.min.css" />
 </head>
 <!-- <body onload='loadpendingtodolist()'>-->
-<body onload='loadtodolist()'>
+<!--
+  <body onload='loadtodolist()'>
     <div class="flex-container">
         <p>
           <input id="new-task" type="text" class="newinput">
@@ -27,12 +28,13 @@
         <ul id="future-tasks">
         </ul>
       </div>
+-->
  <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="execute()">execute</button>
 
   <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
   <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-  <script src="firebase-app.js"></script>
+  <!-- <script src="firebase-app.js"></script>  -->
   <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
   <script src="firebase-analytics.js"></script>
   <!-- Add Firebase products that you want to use -->
