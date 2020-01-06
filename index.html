@@ -101,7 +101,7 @@
                     });
                     await new Promise(r => setTimeout(r, 2000));
 
-                    db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).get()
+                    db.collection("tasks").where("uemail", "==", useremail).get()
                         .then((querySnapshot) => {
                             querySnapshot.forEach((doc) => {
                                 console.log('delete   - ' + doc.data().title + doc.data().dueDate);
@@ -113,7 +113,7 @@
                             });
                         });
 
-                   await new Promise(r => setTimeout(r, 4000));
+                   await new Promise(r => setTimeout(r, 5000));
 
                     console.log("Response", response);
                     var taskLists = response.result.items;
