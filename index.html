@@ -105,7 +105,7 @@ firebase.auth().onAuthStateChanged(user => {
             for (var i = 0; i < taskLists.length; i++) {
               var taskList = taskLists[i];
               console.log(i + ' . ' + taskList.title);
-                  if (useremail != null) {
+               //   if (useremail != null) {
     console.log("if New Add task..." + i + ' . '+ taskList.title + '  - ' + useremail);
  db.collection("tasks").add({
         uemail: 'sharathck3@gmail.com',
@@ -114,7 +114,7 @@ firebase.auth().onAuthStateChanged(user => {
         dateAdded: new Date(),
         status: false
       });
-                  };
+            //      };
 
             }
           } else {
