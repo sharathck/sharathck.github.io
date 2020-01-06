@@ -72,17 +72,6 @@
     messagingSenderId: "576657502351"
   };
   firebase.initializeApp(config);
- var useremail = null;
-var db;
-firebase.auth().onAuthStateChanged(user => {
-  if(user) { useremail= user.email; console.log('logged in' + user.uid + ' email  ' +user.email);
-   db = firebase.firestore();
-  }
-  else{
-    console.log('NOT logged in');
-    window.location = 'signin.html';
-  }
-});
 
     // Subsequent queries will use persistence, if it was enabled successfully
   //Handle Account Status
@@ -98,7 +87,18 @@ firebase.auth().onAuthStateChanged(user => {
           .then(function(response) {
    // var gtasks = JSON.parse(response.result)
     // Handle the results here (response.result has the parsed body).
-                                        
+  var useremail = null;
+var db;
+firebase.auth().onAuthStateChanged(user => {
+  if(user) { useremail= user.email; console.log('logged in' + user.uid + ' email  ' +user.email);
+   db = firebase.firestore();
+  }
+  else{
+    console.log('NOT logged in');
+    window.location = 'signin.html';
+  }
+});
+                                       
     console.log("Response", response);
     var taskLists = response.result.items;
           if (taskLists && taskLists.length > 0) {
@@ -108,12 +108,13 @@ firebase.auth().onAuthStateChanged(user => {
                   if (useremail != null) {
     console.log("if New Add task..." + i + ' . '+ taskList.title + '  - ' + useremail);
  db.collection("tasks").add({
-        uemail: useremail,
+        uemail: 'sharathck3@gmail.com',
         title: taskList.title,
         dueDate: new Date(),
         dateAdded: new Date(),
         status: false
-      });};
+      });
+                  };
 
             }
           } else {
