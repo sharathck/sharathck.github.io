@@ -31,7 +31,9 @@
       </div>
 -->
     <button onclick="authenticate().then(loadClient).then(execute).then(futureexecute)"><h1><b>Load Google Tasks</b></h1></button>
-
+    <p id="tasklog"></p>
+    <p id="futuretasklog"></p>
+    
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="firebase-app.js"></script>
@@ -125,7 +127,10 @@
                                 });
                             };
                         }
+                        document.getElementById("tasklog").innerHTML = 'Loaded active and pending tasks';
+
                     } else {
+                   document.getElementById("tasklog").innerHTML = 'NOT loaded - active and pending tasks';
                         console.log('No task lists found.');
                     }
                 },
@@ -194,8 +199,10 @@
                                 });
                             };
                         }
+                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks';
                     } else {
                         console.log('No task lists found.');
+                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
