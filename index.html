@@ -72,18 +72,6 @@
     messagingSenderId: "576657502351"
   };
   firebase.initializeApp(config);
-  firebase.firestore().enablePersistence()
-  .then(function () {
-   // Initialize Cloud Firestore through firebase
-   console.log("Cache is enabled");
- })
-  .catch(function(err) {
-      if (err.code == 'failed-precondition') {
-console.log("no cache on this browser");
-      } else if (err.code == 'unimplemented') {
-        console.log("no cache on this browser");
-      }
-  });
     
     // Subsequent queries will use persistence, if it was enabled successfully
   //Handle Account Status
@@ -115,10 +103,9 @@ firebase.auth().onAuthStateChanged(user => {
       "showDeleted": false
     })
           .then(function(response) {
-   // var gtasks = JSON.parse(response.result);  
-                // Handle the results here (response.result has the parsed body).
-       var r = JSON.parse(response);
-                                            
+   // var gtasks = JSON.parse(response.result)
+    // Handle the results here (response.result has the parsed body).
+                                        
     console.log("Response", response);
     var taskLists = response.result.items;
           if (taskLists && taskLists.length > 0) {
