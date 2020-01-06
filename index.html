@@ -119,7 +119,7 @@
                                 db.collection("tasks").add({
                                     uemail: useremail,
                                     title: taskList.title,
-                                    dueDate: Date.parse(taskList.due),
+                                    dueDate: new Date(Date.parse(taskList.due)),
                                     dateAdded: new Date(),
                                     status: false
                                 });
