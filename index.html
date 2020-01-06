@@ -30,8 +30,7 @@
         </ul>
       </div>
 -->
-    <button onclick="authenticate().then(loadClient).then(execute)">authorize and load</button>
-    <button onclick="execute()">execute</button>
+    <button onclick="authenticate().then(loadClient).then(execute)"><h1>Load Google Tasks</h1></button>
 
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
@@ -114,7 +113,7 @@
                             });
                         });
 
-                   await new Promise(r => setTimeout(r, 3500));
+                   await new Promise(r => setTimeout(r, 4000));
 
                     console.log("Response", response);
                     var taskLists = response.result.items;
