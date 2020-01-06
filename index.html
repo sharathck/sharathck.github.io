@@ -89,7 +89,7 @@
 
                     var useremail = null;
                     var db;
-                    firebase.auth().onAuthStateChanged(user => {
+                    await firebase.auth().onAuthStateChanged(user => {
                         if (user) {
                             useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
                             db = firebase.firestore();
@@ -99,9 +99,9 @@
                             window.location = 'signin.html';
                         }
                     });
-                    await new Promise(r => setTimeout(r, 2000));
+                    await new Promise(r => setTimeout(r, 3000));
 
-                    db.collection("tasks").where("uemail", "==", useremail).get()
+                   await db.collection("tasks").where("uemail", "==", useremail).get()
                         .then((querySnapshot) => {
                             querySnapshot.forEach((doc) => {
                                 console.log('delete   - ' + doc.data().title + doc.data().dueDate);
