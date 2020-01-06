@@ -72,7 +72,18 @@
     messagingSenderId: "576657502351"
   };
   firebase.initializeApp(config);
-    
+ var useremail = null;
+var db;
+firebase.auth().onAuthStateChanged(user => {
+  if(user) { useremail= user.email; console.log('logged in' + user.uid + ' email  ' +user.email);
+   db = firebase.firestore();
+  }
+  else{
+    console.log('NOT logged in');
+    window.location = 'signin.html';
+  }
+});
+
     // Subsequent queries will use persistence, if it was enabled successfully
   //Handle Account Status
     
@@ -93,13 +104,9 @@
           if (taskLists && taskLists.length > 0) {
             for (var i = 0; i < taskLists.length; i++) {
               var taskList = taskLists[i];
-              console.log(taskList.title);
-var useremail = null;
-firebase.auth().onAuthStateChanged(user => {
-  if(user) { useremail= user.email; console.log('logged in' + user.uid + ' email  ' +user.email);
-   var db = firebase.firestore();
-    if (user.email != null) {
-    console.log("if New Add task..." + useremail);
+              console.log(i + ' . ' + taskList.title);
+                  if (user.email != null) {
+    console.log("if New Add task..." + i + ' . '+ taskList.title + '  - ' + useremail);
  db.collection("tasks").add({
         uemail: useremail,
         title: taskList.title,
@@ -107,12 +114,7 @@ firebase.auth().onAuthStateChanged(user => {
         dateAdded: new Date(),
         status: false
       });};
-  }
-  else{
-    console.log('NOT logged in');
-    window.location = 'signin.html';
-  }
-});
+
             }
           } else {
             console.log('No task lists found.');
