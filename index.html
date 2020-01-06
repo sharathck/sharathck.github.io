@@ -99,7 +99,7 @@
                     db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).get()
                         .then((querySnapshot) => {
                             querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title + doc.data().dueDate);
+                                console.log('delete   - ' + doc.data().title);
                                 db.collection("tasks").doc(doc.id).delete().then(function () {
                                     console.log("Document successfully deleted!");
                                 }).catch(function (error) {
@@ -119,7 +119,7 @@
                                 db.collection("tasks").add({
                                     uemail: useremail,
                                     title: taskList.title,
-                                    dueDate: new Date(),
+                                    dueDate: taskList.due,
                                     dateAdded: new Date(),
                                     status: false
                                 });
