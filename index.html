@@ -105,7 +105,7 @@ firebase.auth().onAuthStateChanged(user => {
             for (var i = 0; i < taskLists.length; i++) {
               var taskList = taskLists[i];
               console.log(i + ' . ' + taskList.title);
-                  if (user.email != null) {
+                  if (useremail != null) {
     console.log("if New Add task..." + i + ' . '+ taskList.title + '  - ' + useremail);
  db.collection("tasks").add({
         uemail: useremail,
