@@ -47,15 +47,15 @@
 
         ///google tasks api
 
-        function authenticate() {
-            return gapi.auth2.getAuthInstance()
+       async function authenticate() {
+            await return gapi.auth2.getAuthInstance()
                 .signIn({ scope: "https://www.googleapis.com/auth/tasks.readonly" })
                 .then(function () { console.log("Sign-in successful"); },
                     function (err) { console.error("Error signing in", err); });
         }
-        function loadClient() {
+       async function loadClient() {
             gapi.client.setApiKey("AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE");
-            return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/tasks/v1/rest")
+            await return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/tasks/v1/rest")
                 .then(function () { console.log("GAPI client loaded for API"); },
                     function (err) { console.error("Error loading GAPI client for API", err); });
         }
