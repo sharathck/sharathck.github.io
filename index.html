@@ -31,7 +31,7 @@
       </div>
 -->
     <button onclick="authenticate().then(loadClient).then(execute)"><h1>Load Google Tasks</h1></button>
-    <!-- <button onclick="execute()"><h2>Execute</h2></button> -->
+    <button onclick="futureexecute()"><h2>Load Future Tasks</h2></button>
 
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
@@ -131,6 +131,80 @@
                 },
                     function (err) { console.error("Execute error", err); });
         }
+        
+          function futureexecute() {
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "dueMin": new Date().toISOString(),
+                "maxResults": 10000,
+                "showCompleted": false,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+                    var config = {
+                        apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
+                        authDomain: "listspeaker.firebaseapp.com",
+                        databaseURL: "https://listspeaker.firebaseio.com",
+                        projectId: "listspeaker",
+                        storageBucket: "listspeaker.appspot.com",
+                        messagingSenderId: "576657502351"
+                    };
+                    firebase.initializeApp(config);
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                     var tomorrow = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrow.setDate(tomorrow.getDate() + 1);
+                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                console.log('delete   - ' + doc.data().title);
+                                db.collection("tasks").doc(doc.id).delete().then(function () {
+                                    console.log("Document successfully deleted!");
+                                }).catch(function (error) {
+                                    console.error("Error removing document: ", error);
+                                });
+                            });
+                        });
+                   await new Promise(r => setTimeout(r, 4000));
+                    console.log("Response", response);
+                    var taskLists = response.result.items;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
+                                db.collection("tasks").add({
+                                    uemail: useremail,
+                                    title: taskList.title,
+                                    dueDate: new Date(Date.parse(taskList.due)),
+                                    dateAdded: new Date(),
+                                    status: false
+                                });
+                            };
+                        }
+                    } else {
+                        console.log('No task lists found.');
+                    }
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+        
         gapi.load("client:auth2", function () {
             gapi.auth2.init({ client_id: "576657502351-qeak2lt68shslqidvrnbm2b12kjp21i1.apps.googleusercontent.com" });
         });
