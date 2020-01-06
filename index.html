@@ -134,9 +134,13 @@
         }
         
           function futureexecute() {
+                 var tomorrowd = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowd.setDate(tomorrow.getDate() + 1);
             return gapi.client.tasks.tasks.list({
                 "tasklist": "@default",
-                "dueMin": new Date().toISOString(),
+                "dueMin": tomorrowd.toISOString(),
                 "maxResults": 10000,
                 "showCompleted": false,
                 "showDeleted": false
