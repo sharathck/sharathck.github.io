@@ -98,7 +98,7 @@ firebase.auth().onAuthStateChanged(user => {
     window.location = 'signin.html';
   }
 });
-     await sleep(4000);                                  
+  await new Promise(r => setTimeout(r, 4000));
     console.log("Response", response);
     var taskLists = response.result.items;
           if (taskLists && taskLists.length > 0) {
