@@ -75,24 +75,6 @@
     
     // Subsequent queries will use persistence, if it was enabled successfully
   //Handle Account Status
-var useremail = null;
-firebase.auth().onAuthStateChanged(user => {
-  if(user) { useremail= user.email; console.log('logged in' + user.uid + ' email  ' +user.email);
-   var db = firebase.firestore();
-    if (user.email != null) {
-    console.log("if New Add task..." + useremail);
- db.collection("tasks").add({
-        uemail: useremail,
-        title: 'tested',
-        dateAdded: new Date(),
-        status: false
-      });};
-  }
-  else{
-    console.log('NOT logged in');
-    window.location = 'signin.html';
-  }
-});
     
     tomorrow.setDate(tomorrow.getDate() + 1);
   return gapi.client.tasks.tasks.list({
@@ -112,6 +94,25 @@ firebase.auth().onAuthStateChanged(user => {
             for (var i = 0; i < taskLists.length; i++) {
               var taskList = taskLists[i];
               console.log(taskList.title);
+var useremail = null;
+firebase.auth().onAuthStateChanged(user => {
+  if(user) { useremail= user.email; console.log('logged in' + user.uid + ' email  ' +user.email);
+   var db = firebase.firestore();
+    if (user.email != null) {
+    console.log("if New Add task..." + useremail);
+ db.collection("tasks").add({
+        uemail: useremail,
+        title: taskList.title,
+        dueDate: new Date(),
+        dateAdded: new Date(),
+        status: false
+      });};
+  }
+  else{
+    console.log('NOT logged in');
+    window.location = 'signin.html';
+  }
+});
             }
           } else {
             console.log('No task lists found.');
