@@ -15,8 +15,8 @@
 
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
-      var CLIENT_ID = '<YOUR_CLIENT_ID>';
-      var API_KEY = '<YOUR_API_KEY>';
+      var CLIENT_ID = '576657502351-qeak2lt68shslqidvrnbm2b12kjp21i1.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest"];
@@ -41,9 +41,9 @@
        */
       function initClient() {
         gapi.client.init({
-          apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
-          clientId: "576657502351-qeak2lt68shslqidvrnbm2b12kjp21i1.apps.googleusercontent.com",
-          scope: "https://www.googleapis.com/auth/tasks.readonly"
+          apiKey: API_KEY,
+          clientId: CLIENT_ID,
+          scope: SCOPES
         }).then(function () {
           // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
