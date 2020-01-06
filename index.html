@@ -85,7 +85,7 @@
                         storageBucket: "listspeaker.appspot.com",
                         messagingSenderId: "576657502351"
                     };
-                    firebase.initializeApp(config);
+                    await firebase.initializeApp(config);
 
                     var useremail = null;
                     var db;
@@ -99,7 +99,7 @@
                             window.location = 'signin.html';
                         }
                     });
-   //                 await new Promise(r => setTimeout(r, 3000));
+                   await new Promise(r => setTimeout(r, 3000));
 
                    await db.collection("tasks").where("uemail", "==", useremail).get()
                         .then((querySnapshot) => {
