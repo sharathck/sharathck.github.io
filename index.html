@@ -60,7 +60,7 @@
               function(err) { console.error("Error loading GAPI client for API", err); });
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
-  function execute() {
+  asyncfunction execute() {
     var tomorrow = new Date();
    
     // Subsequent queries will use persistence, if it was enabled successfully
@@ -98,7 +98,7 @@ firebase.auth().onAuthStateChanged(user => {
     window.location = 'signin.html';
   }
 });
-                                       
+     await sleep(4000);                                  
     console.log("Response", response);
     var taskLists = response.result.items;
           if (taskLists && taskLists.length > 0) {
