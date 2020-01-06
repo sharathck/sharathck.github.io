@@ -123,7 +123,7 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
+                               await db.collection("tasks").add({
                                     uemail: useremail,
                                     title: taskList.title,
                                     dueDate: new Date(),
