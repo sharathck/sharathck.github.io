@@ -98,7 +98,19 @@ firebase.auth().onAuthStateChanged(user => {
     window.location = 'signin.html';
   }
 });
-  await new Promise(r => setTimeout(r, 4000));
+  await new Promise(r => setTimeout(r, 2000));
+        db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log('delete   - ' + doc.data().title + doc.data().dueDate);
+        db.collection("tasks").doc(doc.id).delete().then(function () {
+    console.log("Document successfully deleted!");
+  }).catch(function (error) {
+    console.error("Error removing document: ", error);
+  });
+ });
+    
+    
     console.log("Response", response);
     var taskLists = response.result.items;
           if (taskLists && taskLists.length > 0) {
@@ -108,7 +120,7 @@ firebase.auth().onAuthStateChanged(user => {
               if (useremail != null) {
     console.log("if New Add task..." + i + ' . '+ taskList.title + '  - ' + useremail);
  db.collection("tasks").add({
-        uemail: 'sharathck3@gmail.com',
+        uemail: useremail,
         title: taskList.title,
         dueDate: new Date(),
         dateAdded: new Date(),
