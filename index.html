@@ -60,7 +60,7 @@
               function(err) { console.error("Error loading GAPI client for API", err); });
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
-  async function execute() {
+   function execute() {
     var tomorrow = new Date();
    
     // Subsequent queries will use persistence, if it was enabled successfully
@@ -74,7 +74,7 @@
       "showCompleted": false,
       "showDeleted": false
     })
-          .then(function(response) {
+          .then(async function(response) {
    // var gtasks = JSON.parse(response.result)
     // Handle the results here (response.result has the parsed body).  
     var config = {
