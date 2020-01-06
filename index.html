@@ -30,8 +30,7 @@
         </ul>
       </div>
 -->
-    <button onclick="authenticate().then(loadClient).then(execute).then(futureexecute)"><h1>Load Google Tasks</h1></button>
-    <button onclick="futureexecute()"><h2>Load Future Tasks</h2></button>
+    <button onclick="authenticate().then(loadClient).then(execute).then(futureexecute)"><h1><b>Load Google Tasks</b></h1></button>
 
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
@@ -137,7 +136,7 @@
                  var tomorrowd = new Date();
             // Subsequent queries will use persistence, if it was enabled successfully
             //Handle Account Status
-            tomorrowd.setDate(tomorrow.getDate() + 1);
+            tomorrowd.setDate(tomorrowd.getDate() + 1);
             return gapi.client.tasks.tasks.list({
                 "tasklist": "@default",
                 "dueMin": tomorrowd.toISOString(),
