@@ -99,13 +99,13 @@
                             window.location = 'signin.html';
                         }
                     });
-                    await new Promise(r => setTimeout(r, 3000));
+   //                 await new Promise(r => setTimeout(r, 3000));
 
                    await db.collection("tasks").where("uemail", "==", useremail).get()
-                        .then(async (querySnapshot) => {
+                        .then((querySnapshot) => {
                             querySnapshot.forEach((doc) => {
                                 console.log('delete   - ' + doc.data().title + doc.data().dueDate);
-                               await db.collection("tasks").doc(doc.id).delete().then(function () {
+                               db.collection("tasks").doc(doc.id).delete().then(function () {
                                     console.log("Document successfully deleted!");
                                 }).catch(function (error) {
                                     console.error("Error removing document: ", error);
@@ -113,7 +113,7 @@
                             });
                         });
 
-                   await new Promise(r => setTimeout(r, 5000));
+     //              await new Promise(r => setTimeout(r, 5000));
 
                     console.log("Response", response);
                     var taskLists = response.result.items;
