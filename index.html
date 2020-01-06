@@ -30,7 +30,7 @@
         </ul>
       </div>
 -->
-    <button onclick="authenticate().then(loadClient)">authorize and load</button>
+    <button onclick="authenticate().then(loadClient).then(execute)">authorize and load</button>
     <button onclick="execute()">execute</button>
 
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
@@ -114,7 +114,7 @@
                             });
                         });
 
-                   await new Promise(r => setTimeout(r, 2000));
+                   await new Promise(r => setTimeout(r, 3500));
 
                     console.log("Response", response);
                     var taskLists = response.result.items;
