@@ -119,8 +119,8 @@ firebase.auth().onAuthStateChanged(user => {
                 // Handle the results here (response.result has the parsed body).
     
     console.log("Response", response);
-  response.forEach((doc) => {
-                textresponse += doc.items().title + '. Next Article . ';
+  response.result.forEach((doc) => {
+                console.log( doc.items().title + '. Next Article . ');
             });  
   },
               function(err) { console.error("Execute error", err); });
