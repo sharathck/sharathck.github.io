@@ -120,7 +120,15 @@ firebase.auth().onAuthStateChanged(user => {
        var r = JSON.parse(response);
                                             
     console.log("Response", response);
-    console.log("JSON Parse", r);
+    var taskLists = response.result.items;
+          if (taskLists && taskLists.length > 0) {
+            for (var i = 0; i < taskLists.length; i++) {
+              var taskList = taskLists[i];
+              console.log(taskList.title);
+            }
+          } else {
+            console.log('No task lists found.');
+          }
   //response.result.forEach((doc) => {
     //            console.log( doc.items().title + '. Next Article . ');
       //      });  
