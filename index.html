@@ -60,7 +60,7 @@
               function(err) { console.error("Error loading GAPI client for API", err); });
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
-  asyncfunction execute() {
+  async function execute() {
     var tomorrow = new Date();
    
     // Subsequent queries will use persistence, if it was enabled successfully
