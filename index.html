@@ -117,10 +117,12 @@ firebase.auth().onAuthStateChanged(user => {
           .then(function(response) {
    // var gtasks = JSON.parse(response.result);  
                 // Handle the results here (response.result has the parsed body).
-                console.log("Response", response);
-                console.log("gtasks " + response.result)
-    console.log(" gtasks.title "  + response.result[1].title);
-              },
+    
+    console.log("Response", response);
+  response.forEach((doc) => {
+                textresponse += doc.items().title + '. Next Article . ';
+            });  
+  },
               function(err) { console.error("Execute error", err); });
   }
   gapi.load("client:auth2", function() {
