@@ -46,6 +46,16 @@
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
         ///google tasks api
+          var config = {
+                        apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
+                        authDomain: "listspeaker.firebaseapp.com",
+                        databaseURL: "https://listspeaker.firebaseio.com",
+                        projectId: "listspeaker",
+                        storageBucket: "listspeaker.appspot.com",
+                        messagingSenderId: "576657502351"
+                    };
+                    firebase.initializeApp(config);
+        
         function authenticate() {
             return gapi.auth2.getAuthInstance()
                 .signIn({ scope: "https://www.googleapis.com/auth/tasks.readonly" })
@@ -74,15 +84,6 @@
                 .then(async function (response) {
                     // var gtasks = JSON.parse(response.result)
                     // Handle the results here (response.result has the parsed body).  
-                    var config = {
-                        apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
-                        authDomain: "listspeaker.firebaseapp.com",
-                        databaseURL: "https://listspeaker.firebaseio.com",
-                        projectId: "listspeaker",
-                        storageBucket: "listspeaker.appspot.com",
-                        messagingSenderId: "576657502351"
-                    };
-                    firebase.initializeApp(config);
                     var useremail = null;
                     var db;
                     firebase.auth().onAuthStateChanged(user => {
@@ -143,15 +144,7 @@
                 .then(async function (response) {
                     // var gtasks = JSON.parse(response.result)
                     // Handle the results here (response.result has the parsed body).  
-                    var config = {
-                        apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
-                        authDomain: "listspeaker.firebaseapp.com",
-                        databaseURL: "https://listspeaker.firebaseio.com",
-                        projectId: "listspeaker",
-                        storageBucket: "listspeaker.appspot.com",
-                        messagingSenderId: "576657502351"
-                    };
-                    firebase.initializeApp(config);
+                  
                     var useremail = null;
                     var db;
                     firebase.auth().onAuthStateChanged(user => {
