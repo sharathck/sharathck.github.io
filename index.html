@@ -31,8 +31,15 @@
       </div>
 -->
     <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(execute).then(past8execute).then(past45execute).then(pastmorethan45execute).then(future8execute).then(future45execute).then(future123execute).then(future360execute).then(futureexecute)">Load Google Tasks</button>
-    <p id="tasklog" style="font-size:70px;"></p>
-    <p id="futuretasklog" style="font-size:70px;"></p>
+    <p id="execute" style="font-size:70px;"></p>
+    <p id="past8execute" style="font-size:70px;"></p>
+    <p id="past45execute" style="font-size:70px;"></p>
+    <p id="pastmorethan45execute" style="font-size:70px;"></p>
+    <p id="future8execute" style="font-size:70px;"></p>
+    <p id="future45execute" style="font-size:70px;"></p>
+    <p id="future123execute" style="font-size:70px;"></p>
+    <p id="future360execute" style="font-size:70px;"></p>
+    <p id="futureexecute" style="font-size:70px;"></p>
     
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
@@ -130,10 +137,10 @@
                                 });
                             };
                         }
-                        document.getElementById("tasklog").innerHTML = 'Loaded active and pending tasks within last 3 days';
+                        document.getElementById("execute").innerHTML = 'Loaded active and pending tasks within last 3 days';
 
                     } else {
-                   document.getElementById("tasklog").innerHTML = 'NOT loaded - active and pending tasks';
+                   document.getElementById("execute").innerHTML = 'NOT loaded - active and pending tasks';
                         console.log('No task lists found.');
                     }
                 },
@@ -190,10 +197,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded pending tasks within last 8 days';
+                document.getElementById("past8execute").innerHTML = 'Loaded pending tasks within last 8 days';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded pending tasks within last 8 days';
+                document.getElementById("past8execute").innerHTML = 'NOT Loaded pending tasks within last 8 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -249,10 +256,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded pending tasks within last 45 days';
+                document.getElementById("past45execute").innerHTML = 'Loaded pending tasks within last 45 days';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded pending tasks within last 45 days';
+                document.getElementById("past45execute").innerHTML = 'NOT Loaded pending tasks within last 45 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -306,10 +313,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded pending tasks that are more than 45 days old';
+                document.getElementById("pastmorethan45execute").innerHTML = 'Loaded pending tasks that are more than 45 days old';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded pending tasks that are more than 45 days old';
+                document.getElementById("pastmorethan45execute").innerHTML = 'NOT Loaded pending tasks that are more than 45 days old';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -365,10 +372,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 8 days';
+                document.getElementById("future8execute").innerHTML = 'Loaded Future Tasks < 8 days';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks < 8 days';
+                document.getElementById("future8execute").innerHTML = 'NOT Loaded future tasks < 8 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -425,10 +432,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 45 days';
+                document.getElementById("future45execute").innerHTML = 'Loaded Future Tasks < 45 days';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks < 45 days';
+                document.getElementById("future45execute").innerHTML = 'NOT Loaded future tasks < 45 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -484,10 +491,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 123 days';
+                document.getElementById("future123execute").innerHTML = 'Loaded Future Tasks < 123 days';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks < 123 days';
+                document.getElementById("future123execute").innerHTML = 'NOT Loaded future tasks < 123 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -543,10 +550,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 360 days';
+                document.getElementById("future360execute").innerHTML = 'Loaded Future Tasks < 360 days';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks < 360 days';
+                document.getElementById("future360execute").innerHTML = 'NOT Loaded future tasks < 360 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -598,10 +605,10 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks > 360 days';
+                document.getElementById("futureexecute").innerHTML = 'Loaded Future Tasks > 360 days';
                     } else {
                         console.log('No task lists found.');
-                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks > 360 days';
+                document.getElementById("futureexecute").innerHTML = 'NOT Loaded future tasks > 360 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
