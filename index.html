@@ -173,23 +173,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+                console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -248,23 +232,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+                   console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -321,23 +289,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+                   console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -396,23 +348,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+                   console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -472,23 +408,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+                  console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -547,23 +467,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+                     console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -622,23 +526,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+             console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -693,23 +581,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
-                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                console.log('delete   - ' + doc.data().title);
-                                db.collection("tasks").doc(doc.id).delete().then(function () {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function (error) {
-                                    console.error("Error removing document: ", error);
-                                });
-                            });
-                        });
-                   await new Promise(r => setTimeout(r, 4000));
-                    console.log("Response", response);
+                     console.log("Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
