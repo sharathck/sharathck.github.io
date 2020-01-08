@@ -30,7 +30,7 @@
         </ul>
       </div>
 -->
-    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(execute).then(past8execute).then(past45execute).then(pastmorethan45execute).then(future8execute).then(future45execute).then(future123execute).then(future360execute).then(futureexecute)">Load Google Tasks</button>
+    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(execute).then(past8execute).then(past45execute).then(pastmorethan45execute).then(future8execute).then(future45execute).then(future123execute).then(future360execute).then(futureexecute).then(last3updated)">Load Google Tasks</button>
     <p id="execute" style="font-size:30px;"></p>
     <p id="past8execute" style="font-size:30px;"></p>
     <p id="past45execute" style="font-size:30px;"></p>
@@ -40,6 +40,8 @@
     <p id="future123execute" style="font-size:30px;"></p>
     <p id="future360execute" style="font-size:30px;"></p>
     <p id="futureexecute" style="font-size:30px;"></p>
+    <p id="last3updated" style="font-size:30px;"></p>
+    
     
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
@@ -608,6 +610,70 @@
                     function (err) { console.error("Execute error", err); });
         }
  
+              
+        function last3updated() {
+                 var tomorrowB = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowB.setDate(tomorrowB.getDate() - 3);
+                      
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "updatedMin": tomorrowB.toISOString(),
+                "maxResults": 10000,
+                "showCompleted": false,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+                  
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                console.log("past8execute Response", response);
+                    var taskLists = response.result.items;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
+                                     let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
+                       };
+                        }
+                document.getElementById("last3updated").innerHTML = 'Loaded last3updated';
+                    } else {
+                        console.log('No task lists found.');
+                document.getElementById("last3updated").innerHTML = 'NOT Loaded last3updated';
+                    }
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+ 
+        
           function futureexecute() {
                  var tomorrowd = new Date();
             // Subsequent queries will use persistence, if it was enabled successfully
