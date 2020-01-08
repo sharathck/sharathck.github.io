@@ -120,7 +120,7 @@
                             });
                         });
                    await new Promise(r => setTimeout(r, 6000));
-                    console.log("Response", response);
+                    console.log("excute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -128,14 +128,20 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
-                            };
+                                     let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
+                       };
                         }
                         document.getElementById("execute").innerHTML = 'Loaded active and pending tasks within last 3 days';
 
@@ -180,7 +186,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                console.log("Response", response);
+                console.log("past8execute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -188,14 +194,20 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
-                            };
+                                     let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
+                       };
                         }
                 document.getElementById("past8execute").innerHTML = 'Loaded pending tasks within last 8 days';
                     } else {
@@ -239,7 +251,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                   console.log("Response", response);
+                   console.log("past45execute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -247,13 +259,19 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
+                                let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
                             };
                         }
                 document.getElementById("past45execute").innerHTML = 'Loaded pending tasks within last 45 days';
@@ -296,7 +314,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                   console.log("Response", response);
+                   console.log("pastmorethan45execute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -304,14 +322,20 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
-                            };
+                                 let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
+                           };
                         }
                 document.getElementById("pastmorethan45execute").innerHTML = 'Loaded pending tasks that are more than 45 days old';
                     } else {
@@ -355,7 +379,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                   console.log("Response", response);
+                   console.log("future8execute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -422,7 +446,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                  console.log("Response", response);
+                  console.log("future45execute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -430,14 +454,20 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
-                            };
+                                 let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
+                           };
                         }
                 document.getElementById("future45execute").innerHTML = 'Loaded Future Tasks < 45 days';
                     } else {
@@ -481,7 +511,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     console.log("Response", response);
+                     console.log("future123execute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -489,13 +519,19 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
+                                let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
                             };
                         }
                 document.getElementById("future123execute").innerHTML = 'Loaded Future Tasks < 123 days';
@@ -540,7 +576,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-             console.log("Response", response);
+             console.log("future360execute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -548,13 +584,19 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
+                                let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
                             };
                         }
                 document.getElementById("future360execute").innerHTML = 'Loaded Future Tasks < 360 days';
@@ -595,7 +637,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                     console.log("Response", response);
+                     console.log("futureexecute Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -603,14 +645,20 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                db.collection("tasks").add({
-                                    uemail: useremail,id: taskList.id,
-                                    title: taskList.title,
-                                    dueDate: new Date(Date.parse(taskList.due)),
-                                    dateAdded: new Date(),
-                                    status: false
-                                });
-                            };
+                                  let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(Date.parse(taskList.due)),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
+                          };
                         }
                 document.getElementById("futureexecute").innerHTML = 'Loaded Future Tasks > 360 days';
                     } else {
