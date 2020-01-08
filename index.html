@@ -30,7 +30,7 @@
         </ul>
       </div>
 -->
-    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(execute).then(future8execute).then(future45execute).then(future123execute).then(future360execute).then(futureexecute)">Load Google Tasks</button>
+    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(execute).then(past8execute).then(past45execute).then(pastmorethan45execute).then(future8execute).then(future45execute).then(future123execute).then(future360execute).then(futureexecute)">Load Google Tasks</button>
     <p id="tasklog" style="font-size:70px;"></p>
     <p id="futuretasklog" style="font-size:70px;"></p>
     
@@ -71,12 +71,12 @@
         }
         // Make sure the client is loaded and sign-in is complete before calling this method.
         function execute() {
-            var tomorrow = new Date();
-            // Subsequent queries will use persistence, if it was enabled successfully
-            //Handle Account Status
-            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrowB.setDate(tomorrowB.getDate() - 2);
+            tomorrowE.setDate(tomorrowB.getDate() + 1);
+
             return gapi.client.tasks.tasks.list({
                 "tasklist": "@default",
+                "dueMin": tomorrowB.toISOString(),
                 "dueMax": tomorrow.toISOString(),
                 "maxResults": 10000,
                 "showCompleted": false,
@@ -127,11 +127,234 @@
                                 });
                             };
                         }
-                        document.getElementById("tasklog").innerHTML = 'Loaded active and pending tasks';
+                        document.getElementById("tasklog").innerHTML = 'Loaded active and pending tasks within last 3 days';
 
                     } else {
                    document.getElementById("tasklog").innerHTML = 'NOT loaded - active and pending tasks';
                         console.log('No task lists found.');
+                    }
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+        
+                function past8execute() {
+                 var tomorrowB = new Date();
+                 var tomorrowE = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowB.setDate(tomorrowB.getDate() - 8);
+            tomorrowE.setDate(tomorrowB.getDate() - 2);
+                      
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "dueMin": tomorrowB.toISOString(),
+                "dueMax": tomorrowE.toISOString(),
+                "maxResults": 10000,
+                "showCompleted": false,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+                  
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                     var tomorrow = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrow.setDate(tomorrow.getDate() + 1);
+                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                console.log('delete   - ' + doc.data().title);
+                                db.collection("tasks").doc(doc.id).delete().then(function () {
+                                    console.log("Document successfully deleted!");
+                                }).catch(function (error) {
+                                    console.error("Error removing document: ", error);
+                                });
+                            });
+                        });
+                   await new Promise(r => setTimeout(r, 4000));
+                    console.log("Response", response);
+                    var taskLists = response.result.items;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
+                                db.collection("tasks").add({
+                                    uemail: useremail,
+                                    title: taskList.title,
+                                    dueDate: new Date(Date.parse(taskList.due)),
+                                    dateAdded: new Date(),
+                                    status: false
+                                });
+                            };
+                        }
+                document.getElementById("futuretasklog").innerHTML = 'Loaded pending tasks within last 8 days';
+                    } else {
+                        console.log('No task lists found.');
+                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
+                    }
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+ 
+                function past45execute() {
+                 var tomorrowB = new Date();
+                 var tomorrowE = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowB.setDate(tomorrowB.getDate() - 45);
+            tomorrowE.setDate(tomorrowB.getDate() - 8);
+                      
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "dueMin": tomorrowB.toISOString(),
+                "dueMax": tomorrowE.toISOString(),
+                "maxResults": 10000,
+                "showCompleted": false,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+                  
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                     var tomorrow = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrow.setDate(tomorrow.getDate() + 1);
+                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                console.log('delete   - ' + doc.data().title);
+                                db.collection("tasks").doc(doc.id).delete().then(function () {
+                                    console.log("Document successfully deleted!");
+                                }).catch(function (error) {
+                                    console.error("Error removing document: ", error);
+                                });
+                            });
+                        });
+                   await new Promise(r => setTimeout(r, 4000));
+                    console.log("Response", response);
+                    var taskLists = response.result.items;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
+                                db.collection("tasks").add({
+                                    uemail: useremail,
+                                    title: taskList.title,
+                                    dueDate: new Date(Date.parse(taskList.due)),
+                                    dateAdded: new Date(),
+                                    status: false
+                                });
+                            };
+                        }
+                document.getElementById("futuretasklog").innerHTML = 'Loaded pending tasks within last 45 days';
+                    } else {
+                        console.log('No task lists found.');
+                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
+                    }
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+ 
+              function pastmorethan45execute() {
+                 var tomorrowB = new Date();
+                 var tomorrowE = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowE.setDate(tomorrowB.getDate() - 45);
+                      
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "dueMax": tomorrowE.toISOString(),
+                "maxResults": 10000,
+                "showCompleted": false,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+                  
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                     var tomorrow = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrow.setDate(tomorrow.getDate() + 1);
+                    db.collection("tasks").where("uemail", "==", useremail).where("dueDate", ">", tomorrow).get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                console.log('delete   - ' + doc.data().title);
+                                db.collection("tasks").doc(doc.id).delete().then(function () {
+                                    console.log("Document successfully deleted!");
+                                }).catch(function (error) {
+                                    console.error("Error removing document: ", error);
+                                });
+                            });
+                        });
+                   await new Promise(r => setTimeout(r, 4000));
+                    console.log("Response", response);
+                    var taskLists = response.result.items;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
+                                db.collection("tasks").add({
+                                    uemail: useremail,
+                                    title: taskList.title,
+                                    dueDate: new Date(Date.parse(taskList.due)),
+                                    dateAdded: new Date(),
+                                    status: false
+                                });
+                            };
+                        }
+                document.getElementById("futuretasklog").innerHTML = 'Loaded pending tasks that are more than 45 days old';
+                    } else {
+                        console.log('No task lists found.');
+                document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -203,7 +426,7 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks';
+                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 8 days';
                     } else {
                         console.log('No task lists found.');
                 document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
@@ -279,7 +502,7 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks';
+                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 45 days';
                     } else {
                         console.log('No task lists found.');
                 document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
@@ -354,7 +577,7 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks';
+                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 123 days';
                     } else {
                         console.log('No task lists found.');
                 document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
@@ -429,7 +652,7 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks';
+                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks < 360 days';
                     } else {
                         console.log('No task lists found.');
                 document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
@@ -500,7 +723,7 @@
                                 });
                             };
                         }
-                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks';
+                document.getElementById("futuretasklog").innerHTML = 'Loaded Future Tasks > 360 days';
                     } else {
                         console.log('No task lists found.');
                 document.getElementById("futuretasklog").innerHTML = 'NOT Loaded future tasks';
