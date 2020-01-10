@@ -31,6 +31,7 @@
       </div>
 -->
     <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(execute).then(past8execute).then(past45execute).then(pastmorethan45execute).then(future8execute).then(future45execute).then(future123execute).then(future360execute).then(futureexecute).then(last3updated)">Load Google Tasks</button>
+    <p id="login" style="font-size:30px;"></p>
     <p id="execute" style="font-size:30px;"></p>
     <p id="past8execute" style="font-size:30px;"></p>
     <p id="past45execute" style="font-size:30px;"></p>
@@ -102,10 +103,12 @@
                     firebase.auth().onAuthStateChanged(user => {
                         if (user) {
                             useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
-                            db = firebase.firestore();
+                        document.getElementById("login").innerHTML = 'logged in' + user.uid + ' email  ' + user.email;
+                        db = firebase.firestore();
                         }
                         else {
                             console.log('NOT logged in');
+                    document.getElementById("login").innerHTML = 'NOT Logged in';
                             window.location = 'signin.html';
                         }
                     });
