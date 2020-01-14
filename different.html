@@ -82,8 +82,7 @@ var config = {
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                var containerObject = new JSONObject(taskList);
-                                if (containerObject.has("due")) { console.log(taskList.title + ' has property due date');}
+                               if (taskList[due]) { console.log(taskList.title + ' has property due date');}
                                 else {console.log("No due date..." + i + ' . ' + taskList.title + '  - ' + useremail);}
                                 
                                      let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
