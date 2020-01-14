@@ -190,16 +190,16 @@
 
                                 }
                             }
-                        } 
+                        }
                         document.getElementById("lastdeleted").innerHTML = 'Synced last 4 days tasks';
-                        }
-                        else {
-                            console.log('No task lists found.');
-                            document.getElementById("lastdeleted").innerHTML = 'No updates to tasks in last 4 days';
-                        }
-                    },
+                    }
+                    else {
+                        console.log('No task lists found.');
+                        document.getElementById("lastdeleted").innerHTML = 'No updates to tasks in last 4 days';
+                    }
+                },
                     function (err) { console.error("Execute error", err); }
-                    );
+                );
         };
 
 
@@ -262,16 +262,17 @@
 
                                 }
                             }
-                            document.getElementById("lastdeleted").innerHTML = 'Synced last 4 days tasks';
-                        } else {
-                            console.log('No task lists found.');
-                            document.getElementById("lastdeleted").innerHTML = 'No updates to tasks in last 4 days';
                         }
-                    },
+                        document.getElementById("lastdeleted").innerHTML = 'Deleted tasks';
+                    }
+                    else {
+                        console.log('No task lists found.');
+                        document.getElementById("lastdeleted").innerHTML = 'Tasks are not deleted in last 4 days';
+                    }
+
+                },
                     function (err) { console.error("Execute error", err); });
         }
-
-
 
 
         gapi.load("client:auth2", function () {
