@@ -55,7 +55,9 @@
             return gapi.client.tasks.tasks.list({
                 "tasklist": "@default",
                 "updatedMin": tomorrowB.toISOString(),
-                "maxResults": 10000
+                "maxResults": 10000,
+                "showCompleted": true,
+                "showDeleted": true
             })
                 .then(async function (response) {
                     // var gtasks = JSON.parse(response.result)
