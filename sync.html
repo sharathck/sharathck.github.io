@@ -57,6 +57,7 @@
                 "updatedMin": tomorrowB.toISOString(),
                 "maxResults": 10000,
                 "showCompleted": true,
+                "showHidden": true,
                 "showDeleted": true
             })
                 .then(async function (response) {
@@ -86,6 +87,8 @@
                             if (useremail != null) {
                                  if (taskList.status == "needsAction")  { taskStatus = false; }
                                  else {taskStatus = true;}
+                                
+                                // taskList.deleted == true
                                 console.log("task..." + i + ' . ' + taskList.title + '  - ' + useremail);
                                         db.collection("tasks").set({
                                             uemail: useremail,
