@@ -652,9 +652,8 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
-                                if (taskLists.has("due")) { console.log(' has property due date');}
-                                else {console.log("No due date..." + i + ' . ' + taskList.title + '  - ' + useremail);}
-                                
+                                if (taskList["due"]) { console.log(' has property due date');}
+                                else {console.log("No due date..." + i + ' . ' + taskList.title + '  - ' + useremail);
                                      let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
                                     if (querySnapshot.empty) {
                                         db.collection("tasks").add({
@@ -668,6 +667,8 @@
                                         console.log('Task Already exists' + taskList.title)
            
                                 };
+                                     };
+                                
                        };
                         }
                 document.getElementById("last3updated").innerHTML = 'Loaded last3updated';
