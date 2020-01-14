@@ -644,7 +644,7 @@
                         }
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                console.log("past8execute Response", response);
+                console.log("last 3 updated Response", response);
                     var taskLists = response.result.items;
                     if (taskLists && taskLists.length > 0) {
                         for (var i = 0; i < taskLists.length; i++) {
@@ -652,6 +652,9 @@
                             console.log(i + ' . ' + taskList.title);
                             if (useremail != null) {
                                 console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
+                                if (taskLists.hasOwnProperty("due") { console.log(' has property due date');}
+                                else {console.log("No due date..." + i + ' . ' + taskList.title + '  - ' + useremail);}
+                                
                                      let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
                                     if (querySnapshot.empty) {
                                         db.collection("tasks").add({
