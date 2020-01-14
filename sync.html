@@ -178,7 +178,7 @@
                                     else {
                                         querySnapshot.forEach(function (doc) {
                                             // doc.data() is never undefined for query doc snapshots
-                                            console.log(doc.id + ' existing task');
+                                            console.log(taskList.title + ' task is deleted');
                                             db.collection("tasks").doc(doc.id).delete().then(function () {
                                                 console.log("Document successfully deleted!");
                                             }).catch(function (error) {
