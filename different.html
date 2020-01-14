@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="main.css">
+    <link type="text/css" src="./dist/bttn.min.css" />
+</head>
+
+<body>
+    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(execute)">View Google Tasks</button>
+    <p id="login" style="font-size:30px;"></p>
+    <p id="execute" style="font-size:30px;"></p>
+    <script src="firebase-app.js"></script>
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="firebase-analytics.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="firebase-auth.js"></script>
+    <script src="firebase-firestore.js"></script>
+    <script src="chrono.min.js"></script>
+    <!--<script type="text/javascript" src="app.js"></script>-->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        ///google tasks api
+        
+var config = {
+                        apiKey: "AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE",
+                        authDomain: "listspeaker.firebaseapp.com",
+                        databaseURL: "https://listspeaker.firebaseio.com",
+                        projectId: "listspeaker",
+                        storageBucket: "listspeaker.appspot.com",
+                        messagingSenderId: "576657502351"
+                    };
+                    firebase.initializeApp(config);
+        
+        function authenticate() {
+            return gapi.auth2.getAuthInstance()
+                .signIn({ scope: "https://www.googleapis.com/auth/tasks.readonly" })
+                .then(function () { console.log("Sign-in successful"); },
+                    function (err) { console.error("Error signing in", err); });
+        }
+        function loadClient() {
+            gapi.client.setApiKey("AIzaSyAQ--7BYrBnmjsdX8LvNIOu8uIE7alDsAE");
+            return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/tasks/v1/rest")
+                .then(function () { console.log("GAPI client loaded for API"); },
+                    function (err) { console.error("Error loading GAPI client for API", err); });
+        }
+        function execute() {
+                 var tomorrowB = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowB.setDate(tomorrowB.getDate() - 3);
+                      
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "updatedMin": tomorrowB.toISOString(),
+                "maxResults": 10000,
+                "showCompleted": false,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+                  
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                console.log("last 3 updated Response", response);
+                    var taskLists = response.result.items;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                console.log("if New Add task..." + i + ' . ' + taskList.title + '  - ' + useremail);
+                                if (taskLists.hasOwnProperty("due")) { console.log(' has property due date');}
+                                else {console.log("No due date..." + i + ' . ' + taskList.title + '  - ' + useremail);}
+                                
+                                     let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) {
+                                        db.collection("tasks").add({
+                                            uemail: useremail,id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: new Date(),
+                                            dateAdded: new Date(),
+                                            status: false
+                                        })
+                                    } else {
+                                        console.log('Task Already exists' + taskList.title)
+           
+                                };
+                       };
+                        }
+                document.getElementById("last3updated").innerHTML = 'Loaded last3updated';
+                    } else {
+                        console.log('No task lists found.');
+                document.getElementById("last3updated").innerHTML = 'NOT Loaded last3updated';
+                    }
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+ 
+
+        gapi.load("client:auth2", function () {
+            gapi.auth2.init({ client_id: "576657502351-qeak2lt68shslqidvrnbm2b12kjp21i1.apps.googleusercontent.com" });
+        });
+    </script>
+
+</body>
+
+</html>
