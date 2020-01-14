@@ -7,12 +7,12 @@
 </head>
 
 <body>
-    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(lastupdated).then(lastdeleted).then(lastcompleted)">Sync Google
+    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(lastupdated).then(lastcompleted).then(lastdeleted)">Sync Google
         Tasks</button>
     <p id="login" style="font-size:30px;"></p>
     <p id="lastupdated" style="font-size:30px;"></p>
-    <p id="lastdeleted" style="font-size:30px;"></p>
     <p id="lastcompleted" style="font-size:30px;"></p>
+    <p id="lastdeleted" style="font-size:30px;"></p>
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="firebase-app.js"></script>
@@ -71,7 +71,7 @@
                     var db;
                     firebase.auth().onAuthStateChanged(user => {
                         if (user) {
-                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            useremail = user.email; console.log('logged email  ' + user.email);
                             document.getElementById("login").innerHTML = 'logged in' + user.uid + ' email  ' + user.email;
                             db = firebase.firestore();
                         }
@@ -127,10 +127,10 @@
 
                             }
                         }
-                        document.getElementById("lastupdated").innerHTML = 'Synced tasks that were updated in last 4 days';
+                        document.getElementById("lastupdated").innerHTML = 'Synced tasks that were created or updated in last 4 days';
                     } else {
                         console.log('No task lists found.');
-                        document.getElementById("lastupdated").innerHTML = 'No tasks were updated in last 4 days';
+                        document.getElementById("lastupdated").innerHTML = 'No tasks were created or updated in last 4 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
@@ -194,11 +194,11 @@
                                 }
                             }
                         }
-                        document.getElementById("lastdeleted").innerHTML = 'Synced deleted last 4 days tasks';
+                        document.getElementById("lastdeleted").innerHTML = 'Synced tasks that were deleted in last 4 days tasks';
                     }
                     else {
                         console.log('No task lists found.');
-                        document.getElementById("lastdeleted").innerHTML = 'No deleted tasks in last 4 days';
+                        document.getElementById("lastdeleted").innerHTML = 'No tasks were deleted in last 4 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); }
@@ -266,11 +266,11 @@
                                 }
                             }
                         }
-                        document.getElementById("lastcompleted").innerHTML = 'Synced deleted last 4 days tasks';
+                        document.getElementById("lastcompleted").innerHTML = 'Synced tasks that were completed in last 4 days tasks';
                     }
                     else {
                         console.log('No task lists found.');
-                        document.getElementById("lastcompleted").innerHTML = 'No deleted tasks in last 4 days';
+                        document.getElementById("lastcompleted").innerHTML = 'No tasks were completed in last 4 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); }
