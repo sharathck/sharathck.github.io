@@ -53,7 +53,7 @@
             var tomorrowB = new Date();
             // Subsequent queries will use persistence, if it was enabled successfully
             //Handle Account Status
-            tomorrowB.setDate(tomorrowB.getDate() - 4);
+            tomorrowB.setDate(tomorrowB.getDate() - 40);
 
             return gapi.client.tasks.tasks.list({
                 "tasklist": "@default",
