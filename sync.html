@@ -7,13 +7,14 @@
 </head>
 
 <body>
-    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(lastupdated).then(last40updated).then(lastcompleted).then(lastdeleted)">Sync Google
+    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(lastupdated).then(lastcompleted).then(lastdeleted).then(last40updated).then(last40completed)">Sync Google
         Tasks</button>
     <p id="login" style="font-size:30px;"></p>
     <p id="lastupdated" style="font-size:30px;"></p>
-    <p id="last40updated" style="font-size:30px;"></p>
     <p id="lastcompleted" style="font-size:30px;"></p>
     <p id="lastdeleted" style="font-size:30px;"></p>
+    <p id="last40updated" style="font-size:30px;"></p>
+    <p id="last40completed" style="font-size:30px;"></p>
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="firebase-app.js"></script>
@@ -282,7 +283,7 @@
                                 }
                             }
                         }
-                        document.getElementById("lastdeleted").innerHTML = 'Synced tasks that were deleted in last 4 days tasks';
+                        document.getElementById("lastdeleted").innerHTML = 'Synced tasks that were deleted in last 4 days';
                     }
                     else {
                         console.log('No task lists found.');
@@ -354,7 +355,7 @@
                                 }
                             }
                         }
-                        document.getElementById("lastcompleted").innerHTML = 'Synced tasks that were completed in last 4 days tasks';
+                        document.getElementById("lastcompleted").innerHTML = 'Synced tasks that were completed in last 4 days';
                     }
                     else {
                         console.log('No task lists found.');
@@ -364,6 +365,80 @@
                     function (err) { console.error("Execute error", err); }
                 );
         };
+
+
+         function last40completed() {
+            var tomorrowB = new Date();
+            var tomorrowE = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowB.setDate(tomorrowB.getDate() - 40);
+            tomorrowE.setDate(tomorrowB.getDate() - 3);
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "updatedMin": tomorrowB.toISOString(),
+                "maxResults": 10000,
+                "completedMin" : tomorrowB.toISOString(),
+                "completedMax" : tomorrowE.toISOString(),
+                "showCompleted": true,
+                "showHidden": true,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged in' + user.uid + ' email  ' + user.email);
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                    console.log("Last Updated Response", response);
+                    var taskLists = response.result.items;
+                    var taskStatus = false;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                if (taskList["completed"]) {
+                                    let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                    if (querySnapshot.empty) { }
+                                    else {
+                                        querySnapshot.forEach(function (doc) {
+                                            // doc.data() is never undefined for query doc snapshots
+                                            console.log(taskList.title + ' task is deleted');
+                                            db.collection("tasks").doc(doc.id).delete().then(function () {
+                                                console.log("Document successfully deleted!");
+                                            }).catch(function (error) {
+                                                console.error("Error removing document: ", error);
+                                            });
+
+                                        });
+
+                                    };
+
+                                }
+                            }
+                        }
+                        document.getElementById("last40completed").innerHTML = 'Synced tasks that were completed in last 40 days';
+                    }
+                    else {
+                        console.log('No task lists found.');
+                        document.getElementById("last40completed").innerHTML = 'No tasks were completed in last 40 days';
+                    }
+                },
+                    function (err) { console.error("Execute error", err); }
+                );
+        };
+
 
 
 
