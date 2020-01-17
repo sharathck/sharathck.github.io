@@ -7,10 +7,11 @@
 </head>
 
 <body>
-    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(lastupdated).then(lastcompleted).then(lastdeleted)">Sync Google
+    <button style="font-size:90px;" onclick="authenticate().then(loadClient).then(lastupdated).then(last40updated).then(lastcompleted).then(lastdeleted)">Sync Google
         Tasks</button>
     <p id="login" style="font-size:30px;"></p>
     <p id="lastupdated" style="font-size:30px;"></p>
+    <p id="last40updated" style="font-size:30px;"></p>
     <p id="lastcompleted" style="font-size:30px;"></p>
     <p id="lastdeleted" style="font-size:30px;"></p>
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
@@ -50,6 +51,93 @@
         }
 
         function lastupdated() {
+            var tomorrowB = new Date();
+            // Subsequent queries will use persistence, if it was enabled successfully
+            //Handle Account Status
+            tomorrowB.setDate(tomorrowB.getDate() - 3);
+
+            return gapi.client.tasks.tasks.list({
+                "tasklist": "@default",
+                "updatedMin": tomorrowB.toISOString(),
+                "maxResults": 10000,
+                "showCompleted": false,
+                "showHidden": false,
+                "showDeleted": false
+            })
+                .then(async function (response) {
+                    // var gtasks = JSON.parse(response.result)
+                    // Handle the results here (response.result has the parsed body).  
+
+                    var useremail = null;
+                    var db;
+                    firebase.auth().onAuthStateChanged(user => {
+                        if (user) {
+                            useremail = user.email; console.log('logged email  ' + user.email);
+                            document.getElementById("login").innerHTML = 'logged in' + user.uid + ' email  ' + user.email;
+                            db = firebase.firestore();
+                        }
+                        else {
+                            console.log('NOT logged in');
+                            window.location = 'signin.html';
+                        }
+                    });
+                    await new Promise(r => setTimeout(r, 2000));
+                    console.log("Last Updated Response", response);
+                    var taskLists = response.result.items;
+                    var taskStatus = false;
+                    if (taskLists && taskLists.length > 0) {
+                        for (var i = 0; i < taskLists.length; i++) {
+                            var taskList = taskLists[i];
+                            console.log(i + ' . ' + taskList.title);
+                            if (useremail != null) {
+                                if (taskList.status == "needsAction") { taskStatus = false; }
+                                else { taskStatus = true; }
+                                var dueDate = new Date();
+                                if (taskList["due"]) {
+                                    dueDate = new Date(Date.parse(taskList.due));
+                                    console.log(taskList.title + ' with due Date');
+                                }
+                                // taskList.deleted == true
+                                let querySnapshot = await db.collection("tasks").where("uemail", "==", useremail).where("id", "==", taskList.id).get();
+                                if (querySnapshot.empty) {
+                                    db.collection("tasks").add({
+                                        uemail: useremail,
+                                        id: taskList.id,
+                                        title: taskList.title,
+                                        dueDate: dueDate,
+                                        dateAdded: new Date(),
+                                        status: taskStatus
+                                    })
+                                } else {
+                                    console.log('Task Already exists so update' + taskList.title)
+                                    querySnapshot.forEach(function (doc) {
+                                        // doc.data() is never undefined for query doc snapshots
+                                        console.log(doc.id + ' existing task');
+                                        db.collection("tasks").doc(doc.id).set({
+                                            uemail: useremail,
+                                            id: taskList.id,
+                                            title: taskList.title,
+                                            dueDate: dueDate,
+                                            dateAdded: new Date(),
+                                            status: taskStatus
+                                        });
+
+                                    });
+
+                                };
+
+                            }
+                        }
+                        document.getElementById("lastupdated").innerHTML = 'Synced tasks that were created or updated in last 3 days';
+                    } else {
+                        console.log('No task lists found.');
+                        document.getElementById("lastupdated").innerHTML = 'No tasks were created or updated in last 3 days';
+                    }
+                },
+                    function (err) { console.error("Execute error", err); });
+        }
+
+        function last40updated() {
             var tomorrowB = new Date();
             // Subsequent queries will use persistence, if it was enabled successfully
             //Handle Account Status
@@ -127,10 +215,10 @@
 
                             }
                         }
-                        document.getElementById("lastupdated").innerHTML = 'Synced tasks that were created or updated in last 40 days';
+                        document.getElementById("last40updated").innerHTML = 'Synced tasks that were created or updated in last 40 days';
                     } else {
                         console.log('No task lists found.');
-                        document.getElementById("lastupdated").innerHTML = 'No tasks were created or updated in last 4 days';
+                        document.getElementById("last40updated").innerHTML = 'No tasks were created or updated in last 40 days';
                     }
                 },
                     function (err) { console.error("Execute error", err); });
