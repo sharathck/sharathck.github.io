@@ -52,7 +52,9 @@ var numarticles = 10;
 if ( getUrlVars()["articles"] !== null ) { 
 numarticles = parseInt(getUrlVars()["articles"]);
 };
-//console.log(' addmode ' + addmode);
+console.log(' getUrlVars()["articles"] ' + getUrlVars()["articles"]);
+console.log('parseInt(getUrlVars()["articles"]) ' + parseInt(getUrlVars()["articles"]));
+
 //New Task List Item
 var createNewTaskElement = function (taskString, taskID) {
     var listItem = document.createElement("li");
