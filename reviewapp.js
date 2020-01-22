@@ -48,6 +48,9 @@ function getUrlVars() {
 }
 
 var addmode = getUrlVars()["addmode"];
+var numarticles = 10;
+numarticles = parseInt(getUrlVars()["articles"]);
+
 //console.log(' addmode ' + addmode);
 //New Task List Item
 var createNewTaskElement = function (taskString, taskID) {
@@ -128,7 +131,7 @@ var loadtodolist = function () {
             var currDate = new Date();
             currDate.setHours(23);
             currDate.setMinutes(59);
-            db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").get()
+            db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").limit(numarticles).get()
                 .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                         //console.log(querySnapshot);
