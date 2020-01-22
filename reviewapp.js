@@ -49,8 +49,9 @@ function getUrlVars() {
 
 var addmode = getUrlVars()["addmode"];
 var numarticles = 10;
+if ( getURLParameter("articles") !== null ) { 
 numarticles = parseInt(getUrlVars()["articles"]);
-
+};
 //console.log(' addmode ' + addmode);
 //New Task List Item
 var createNewTaskElement = function (taskString, taskID) {
