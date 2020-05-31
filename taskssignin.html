@@ -73,7 +73,7 @@
 firebase.auth().onAuthStateChanged(user => {
   if(user) {
     console.log(firebase.auth().currentUser.uid);
-    window.location = 'index.html'; //After successful login, user will be redirected to home.html
+    window.location = 'tasksindex.html'; //After successful login, user will be redirected to home.html
   }
 });
 </script>
