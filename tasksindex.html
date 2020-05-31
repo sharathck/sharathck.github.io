@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="tasksmain.css">
   <link type="text/css" src="./dist/bttn.min.css" />
 </head>
 <!-- <body onload='loadpendingtodolist()'>-->
@@ -61,12 +61,12 @@ console.log("no cache on this browser");
 firebase.auth().onAuthStateChanged(user => {
   if(user) {}
   else{
-    window.location = 'signin.html';
+    window.location = 'taskssignin.html';
   }
 });
 
 </script>
-<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="tasksapp.js"></script>
 
 </body>
 
