@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Sample FirebaseUI App</title>
+    <!-- *******************************************************************************************
+       * TODO(DEVELOPER): Paste the initialization snippet from:
+       * Firebase Console > Overview > Add Firebase to your web app. *
+       ***************************************************************************************** -->
+       <script src="firebase-app.js"></script>
+       <script src="firebase.js"></script>
+       <script src="firebase-firestore.js"></script>
+       <script src="firebase-auth.js"></script>
+       <script src='jquery.min.js'></script>
+        <script src="firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="firebaseui.css" />
+    
+    <link rel="icon" href="https://sharathck.github.io/favicon.png">
+    <script type="text/javascript">
+  var config = {
+    apiKey: "AIzaSyBNeonGTfBV2QhXxkufPueC-gQLCrcsB08",
+    authDomain: "reviewtext-ad5c6.firebaseapp.com",
+    databaseURL: "https://reviewtext-ad5c6.firebaseio.com",
+    projectId: "reviewtext-ad5c6",
+    storageBucket: "reviewtext-ad5c6.appspot.com",
+    messagingSenderId: "892085575649",
+    appId: "1:892085575649:web:b57abe0e1438f10dc6fca0"
+  };
+  firebase.initializeApp(config);
+      // FirebaseUI config.
+          // FirebaseUI config.
+          var uiConfig = {
+        callbacks: {
+          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+            var user = authResult.user;
+            var credential = authResult.credential;
+            var isNewUser = authResult.additionalUserInfo.isNewUser;
+            var providerId = authResult.additionalUserInfo.providerId;
+            var operationType = authResult.operationType;
+            // Do something with the returned AuthResult.
+            // Return type determines whether we continue the redirect automatically
+            // or whether we leave that to developer to handle.
+            return true;
+          },
+          signInFailure: function(error) {
+            // Some unrecoverable error occurred during sign-in.
+            // Return a promise when error handling is completed and FirebaseUI
+            // will reset, clearing any UI. This commonly occurs for error code
+            // 'firebaseui/anonymous-upgrade-merge-conflict' when merge conflict
+            // occurs. Check below for more details on this.
+            return handleUIError(error);
+          },
+          uiShown: function() {
+            // The widget is rendered.
+            // Hide the loader.
+            document.getElementById('loader').style.display = 'none';
+          }
+        },
+        credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
+        // Query parameter name for mode.
+        queryParameterForWidgetMode: 'mode',
+        // Query parameter name for sign in success url.
+        queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
+        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+        signInFlow: 'popup',
+        signInOptions: [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID
+        ]
+      };
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+//Handle Account Status
+firebase.auth().onAuthStateChanged(user => {
+  if(user) {
+    console.log(firebase.auth().currentUser.uid);
+    window.location = 'kidsindex.html'; //After successful login, user will be redirected to home.html
+  }
+});
+</script>
+  </head>
+  <body>
+    <!-- The surrounding HTML is left untouched by FirebaseUI.
+         Your app may use that space for branding, controls and other customizations.-->
+    <h2>Review Text</h2>
+    <p>Click on Sign in button below. You can listen to active tasks by saying <b>'Talk to Review Text'</b> to Google Assitant 
+        (google home speaker or assistant app on phone or android auto).</p>
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+  </body>
+</html>
