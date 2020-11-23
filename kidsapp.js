@@ -36,6 +36,7 @@ document.getElementById("new-task").focus();
 taskInput.addEventListener("keydown", function (e) {
     if ((e.keyCode === 13) || (e.keyCode === 9)) {
         addTask();
+        document.getElementById("new-task").focus();
     }
 });
 
