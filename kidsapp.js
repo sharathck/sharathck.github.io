@@ -34,7 +34,7 @@ var useremail = null;
 document.getElementById("new-task").focus();
 
 taskInput.addEventListener("keydown", function (e) {
-    if ((e.keyCode === 13) || (e.keyCode === 96)) {
+    if ((e.keyCode === 13) || (e.keyCode === 18)) {
         addTask();
         document.getElementById("new-task").focus();
     }
