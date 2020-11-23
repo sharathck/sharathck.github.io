@@ -131,7 +131,7 @@ var loadtodolist = function () {
             var currDate = new Date();
             currDate.setHours(23);
             currDate.setMinutes(59);
-            db.collection("tasks").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").limit(numarticles).get()
+            db.collection("kids").where("uemail", "==", useremail).where("status", "==", false).orderBy("dueDate", "desc").limit(numarticles).get()
                 .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                         //console.log(querySnapshot);
@@ -160,7 +160,7 @@ var loadcompletedtodolist = function () {
     console.log('completing ' + useremail);
     document.getElementById("show-complete-button").disabled = true;
     if (useremail != null) {
-        db.collection("tasks").where("uemail", "==", useremail).where("status", "==", true).get().then((querySnapshot) => {
+        db.collection("kids").where("uemail", "==", useremail).where("status", "==", true).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 //      console.log(`${doc.id} => ${doc.data()}` );
                 console.log('completed' + doc.data().title);
@@ -190,7 +190,7 @@ var addTask = function () {
     if (useremail != null) {
         console.log("New Add task...");
         var inputvaluetask = taskInput.value;
-        db.collection("tasks").add({
+        db.collection("kids").add({
             uemail: useremail,
             title: inputvaluetask,
             dueDate: new Date(),
@@ -219,7 +219,7 @@ var deleteTask = function () {
     console.log("Delete task");
     console.log(listItem.querySelector("#doclabel").innerText);
     console.log(listItem.querySelector("#tasklabel").innerText);
-    db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).delete().then(function () {
+    db.collection("kids").doc(listItem.querySelector("#doclabel").innerText).delete().then(function () {
         console.log("Document successfully deleted!");
     }).catch(function (error) {
         console.error("Error removing document: ", error);
@@ -235,7 +235,7 @@ var taskCompleted = function () {
     var listItem = this.parentNode;
     console.log("Mark completed");
 
-    db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
+    db.collection("kids").doc(listItem.querySelector("#doclabel").innerText).update({
         status: true
     }).then(function () {
         console.log("Document successfully updated!");
@@ -256,7 +256,7 @@ var taskIncomplete = function () {
     var listItem = this.parentNode;
     console.log("Mark incomplete");
 
-    db.collection("tasks").doc(listItem.querySelector("#doclabel").innerText).update({
+    db.collection("kids").doc(listItem.querySelector("#doclabel").innerText).update({
         status: false
     })
         .then(function () {
