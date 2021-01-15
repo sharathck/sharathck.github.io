@@ -161,7 +161,7 @@ var loadcompletedtodolist = function () {
     console.log('completing ' + useremail);
     document.getElementById("show-complete-button").disabled = true;
     if (useremail != null) {
-        db.collection("tasks").where("uemail", "==", useremail).where("status", "==", true).get().then((querySnapshot) => {
+        db.collection("tasks").where("uemail", "==", useremail).where("status", "==", true).limit(20).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 //      console.log(`${doc.id} => ${doc.data()}` );
                 console.log('completed' + doc.data().title);
