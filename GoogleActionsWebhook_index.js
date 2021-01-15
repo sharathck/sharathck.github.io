@@ -43,15 +43,13 @@ app.handle('ReadReviewText', async (conv) => {
                 textresponse = doc.data().title + '.';
                 if (doc.data().readPosition) {startPos = doc.data().readPosition;}
                 if (textresponse.substring(startPos).length > responselimit) {
-                    googleresponse = textresponse.substr(startPos, (responselimit - 1));
-                    stopPosition = googleresponse.lastIndexOf(".");
+                    stopPosition = textresponse.substr(startPos, (responselimit - 1)).lastIndexOf(".");
                     if (stopPosition > 0) {
                         readPos = stopPosition + 1;
                     } else {readPos = responselimit;}
+                    googleresponse = textresponse.substr(startPos, readPos);
                     finalreadPos = startPos + readPos;
-                  
                     db.collection("tasks").doc(doc.id).update({
-       //                 title: textresponse.substr((responselimit + 1), (textlength - (responselimit -1) )),
                         readPosition: finalreadPos
                     });
                 } else {
