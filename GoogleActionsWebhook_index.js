@@ -46,7 +46,7 @@ app.handle('ReadReviewText', async (conv) => {
                     googleresponse = textresponse.substr(startPos, (responselimit - 1));
                     stopPosition = googleresponse.lastIndexOf(".");
                     if (stopPosition > 0) {
-                        readPos = stopPosition;
+                        readPos = stopPosition + 1;
                     } else {readPos = responselimit;}
                     finalreadPos = startPos + readPos;
                   
