@@ -35,7 +35,7 @@ app.handle('ReadReviewText', async (conv) => {
         var startPos = 0;
         var readPos = 0;
         var finalreadPos = 0;
-        var responselimit = 2000;
+        var responselimit = 4000;
   if (email) { 
         var result = await db.collection("tasks").where("uemail", "==", email).where("status", "==", false).orderBy("dueDate", "desc").limit(1).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -53,7 +53,7 @@ app.handle('ReadReviewText', async (conv) => {
                         readPosition: finalreadPos
                     });
                 } else {
-                    googleresponse = textresponse;
+                    googleresponse = textresponse.substring(startPos);
                     db.collection("tasks").doc(doc.id).update({
                             status: true
                         }).then(function () {
