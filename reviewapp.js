@@ -49,7 +49,7 @@ function getUrlVars() {
 }
 
 var addmode = getUrlVars()["addmode"];
-var numarticles = 10;
+var numarticles = 30;
 if ( isNaN(parseInt(getUrlVars()["articles"]) ) ) { } 
 else {numarticles = parseInt(getUrlVars()["articles"]);};
 
@@ -71,6 +71,7 @@ var createNewTaskElement = function (taskString, taskID) {
         tlabel.className = "cmobile";
         deleteButton.className = "mdelete";
         checkBox.className = "mcheckbox";
+        numarticles = 20;
     } else {
         tlabel.className = "cdesktop";
         deleteButton.className = "delete";
