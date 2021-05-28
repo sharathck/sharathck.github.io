@@ -55,7 +55,7 @@ else {numarticles = parseInt(getUrlVars()["articles"]);};
 
 var print = 0;
 if ( isNaN(parseInt(getUrlVars()["print"]) ) ) { } 
-else {numarticles = parseInt(getUrlVars()["print"]);};
+else {print = parseInt(getUrlVars()["print"]);};
 
 if (print == 1) { 
 document.getElementById("add-button").style.visibility = "hidden";
