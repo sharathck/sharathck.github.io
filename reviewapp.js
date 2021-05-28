@@ -53,6 +53,20 @@ var numarticles = 30;
 if ( isNaN(parseInt(getUrlVars()["articles"]) ) ) { } 
 else {numarticles = parseInt(getUrlVars()["articles"]);};
 
+var print = 0;
+if ( isNaN(parseInt(getUrlVars()["print"]) ) ) { } 
+else {numarticles = parseInt(getUrlVars()["print"]);};
+
+if (print == 1) { 
+document.getElementById("add-button").style.visibility = "hidden";
+document.getElementById("signout-button").style.visibility = "hidden";
+document.getElementById("show-complete-button").style.visibility = "hidden";
+document.getElementById("new-task").style.visibility = "hidden";
+document.getElementById("assist-button").style.visibility = "hidden";
+    
+    
+}
+
 //New Task List Item
 var createNewTaskElement = function (taskString, taskID) {
     var listItem = document.createElement("li");
@@ -81,6 +95,11 @@ var createNewTaskElement = function (taskString, taskID) {
     if (/Android|webOS/i.test(navigator.userAgent)) {
         tlabel.className = "candroid";
     };
+
+    if (print == 1) { 
+document.getElementById("deleteButton").style.visibility = "hidden";
+document.getElementById("checkBox").style.visibility = "hidden";    
+}
 
     tlabel.innerText = taskString;
 
