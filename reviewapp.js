@@ -96,10 +96,7 @@ var createNewTaskElement = function (taskString, taskID) {
         tlabel.className = "candroid";
     };
 
-    if (print == 1) { 
-document.getElementById("deleteButton").style.visibility = "hidden";
-document.getElementById("checkBox").style.visibility = "hidden";    
-}
+
 
     tlabel.innerText = taskString;
 
